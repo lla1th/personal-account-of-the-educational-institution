@@ -1,18 +1,18 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
+<script setup></script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <q-btn color="white" text-color="black" label="text"/>
-  <HelloWorld msg="Vite + Vue" />
+  <q-layout>
+  <q-header elevated>
+    <q-toolbar>
+        <q-btn flat round dense icon="menu" />
+        <q-toolbar-title>Header</q-toolbar-title>
+    </q-toolbar>
+  </q-header>
+  <NightDrawer />
+    <q-page-container>
+        <router-view />
+    </q-page-container>
+  </q-layout>
 </template>
 
 <style scoped>
