@@ -5,7 +5,7 @@ import App from './App.vue';
 import router from './router/routers.js';
 
 /** Pinia install */
-import { createPinia, useMainStore } from 'pinia';
+import { createPinia } from 'pinia';
 
 const pinia = createPinia();
 
@@ -31,10 +31,3 @@ createApp(App)
     .use(Quasar, quasarSettings)
     .component('NightDrawer', NightDrawer)
     .mount('#app')
-
-
-router.beforeEach((to) => {
-    const main = useMainStore(pinia)
-
-})
-

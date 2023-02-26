@@ -1,19 +1,19 @@
 <script setup>
-import { ref } from 'vue';
-
-defineProps({
+const props = defineProps({
     icons: {
         type: Array,
         default: () => ([]),
     },
+    open: {
+        type: Boolean,
+        default: () => true,
+    },
 })
-const drawer = ref(true);
-
 </script>
 
 <template>
 <q-drawer
-    v-model="drawer"
+    v-model="props.open"
     show-if-above
 
     :width="200"

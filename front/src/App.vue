@@ -1,14 +1,20 @@
-<script setup></script>
+<script setup>
+import { useMainStore } from './stores/main.js';
+
+const store = useMainStore();
+</script>
 
 <template>
   <q-layout>
   <q-header elevated>
     <q-toolbar>
-        <q-btn flat round dense icon="menu" />
+        <q-btn flat round dense icon="menu" @click='store.chooseModal(!store.openDrawer)' />
         <q-toolbar-title>Header</q-toolbar-title>
     </q-toolbar>
   </q-header>
-  <NightDrawer />
+  <NightDrawer
+    :open="store.openDrawer"
+  />
     <q-page-container>
         <router-view />
     </q-page-container>
