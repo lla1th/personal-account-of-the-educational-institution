@@ -1,6 +1,8 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
+import menuNavigation from '../entities/menuNavigation.js';
+
 /**
   Подсказка для меня, при работе с copmosition AAAAPI
   через ref - state
@@ -10,6 +12,7 @@ import { defineStore } from 'pinia';
 */
 
 export const useMainStore = defineStore('main', () => {
+    const menu = ref(menuNavigation());
     const openDrawer = ref(true);
 
 
@@ -17,5 +20,12 @@ export const useMainStore = defineStore('main', () => {
         openDrawer.value = status;
     }
 
-    return { openDrawer, chooseModal };
+    return {
+        // state
+        openDrawer,
+        menu,
+
+        // actions
+        chooseModal,
+    };
 });

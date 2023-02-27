@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps({
-    icons: {
+    items: {
         type: Array,
         default: () => ([]),
     },
@@ -23,14 +23,16 @@ const props = defineProps({
 >
     <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
         <q-list padding>
-            <q-item clickable v-ripple>
+            <q-item
+                v-for="(item, index) in items"
+                :key="`item-menu-${index}`"
+                clickable
+                v-ripple
+            >
                 <q-item-section avatar>
-                    <q-icon name="inbox" />
+                    <q-icon :name="item.icon" />
                 </q-item-section>
-
-                <q-item-section>
-                    Hello
-                </q-item-section>
+                <q-item-section>{{ item.name }}</q-item-section>
             </q-item>
         </q-list>
     </q-scroll-area>

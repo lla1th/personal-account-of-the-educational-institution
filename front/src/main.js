@@ -22,7 +22,7 @@ import '@quasar/extras/fontawesome-v6/fontawesome-v6.css';
 const quasarSettings = { plugins: {} };
 
 /** import components (beta) */
-//todo перенести доработать через цикл
+//todo перенести, доработать через цикл
 import NightDrawer from "./components/NightDrawer.vue";
 
 createApp(App)

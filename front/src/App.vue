@@ -14,6 +14,7 @@ const store = useMainStore();
   </q-header>
   <NightDrawer
     :open="store.openDrawer"
+    :items="store.menu"
   />
     <q-page-container>
         <router-view />
