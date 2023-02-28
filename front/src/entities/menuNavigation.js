@@ -1,6 +1,10 @@
 export default () => [
- {
-    icon: 'house',
-    name: 'Главная',
- }
+     {
+         icon: 'r_home',
+        name: 'Главная',
+     },
+     {
+         icon: 'r_calendar_month',
+         name: 'Расписание',
+     },
 ];

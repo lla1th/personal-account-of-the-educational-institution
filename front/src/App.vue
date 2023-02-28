@@ -5,16 +5,16 @@ const store = useMainStore();
 </script>
 
 <template>
-  <q-layout>
+  <q-layout view="hHh lpr lff">
   <q-header elevated>
     <q-toolbar>
-        <q-btn flat round dense icon="menu" @click='store.chooseModal(!store.openDrawer)' />
-        <q-toolbar-title>Header</q-toolbar-title>
+        <q-toolbar-title>Приложение</q-toolbar-title>
     </q-toolbar>
   </q-header>
   <NightDrawer
-    :open="store.openDrawer"
+    :mini="!store.miniMenu"
     :items="store.menu"
+    @size-sidebar="store.chooseModal(!store.miniMenu)"
   />
     <q-page-container>
         <router-view />

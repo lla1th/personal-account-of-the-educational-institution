@@ -1,21 +1,15 @@
 <script setup>
-const props = defineProps({
+defineProps({
     items: {
         type: Array,
         default: () => ([]),
-    },
-    open: {
-        type: Boolean,
-        default: () => true,
     },
 })
 </script>
 
 <template>
 <q-drawer
-    v-model="props.open"
     show-if-above
-
     :width="200"
     :breakpoint="500"
     bordered
@@ -30,7 +24,7 @@ const props = defineProps({
                 v-ripple
             >
                 <q-item-section avatar>
-                    <q-icon :name="item.icon" />
+                    <q-icon :name="item.icon" size="sm" />
                 </q-item-section>
                 <q-item-section>{{ item.name }}</q-item-section>
             </q-item>

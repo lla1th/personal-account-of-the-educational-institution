@@ -13,17 +13,17 @@ import menuNavigation from '../entities/menuNavigation.js';
 
 export const useMainStore = defineStore('main', () => {
     const menu = ref(menuNavigation());
-    const openDrawer = ref(true);
+    const miniMenu = ref(true);
 
 
     const chooseModal = (status = false) => {
-        openDrawer.value = status;
+        miniMenu.value = status;
     }
 
     return {
         // state
-        openDrawer,
         menu,
+        miniMenu,
 
         // actions
         chooseModal,

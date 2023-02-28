@@ -4,5 +4,7 @@
 </script>
 
 <template>
-<!--    <q-btn color="white" text-color="black" label="Home" />-->
+    <q-page padding>
+        <q-btn color="white" text-color="black" label="Home" />
+    </q-page>
 </template>
