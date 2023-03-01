@@ -1,11 +1,16 @@
 <script setup>
 // imports
-//import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { useHomeStore } from '../../../stores/home.js';
 
 const store = useHomeStore();
 
-import NightCard from "../../../components/ui/NightCard.vue";
+const router = useRouter();
+
+
+const routerPage = (url) => {
+    router.push(url)
+}
 </script>
 
 <template>
@@ -17,7 +22,7 @@ import NightCard from "../../../components/ui/NightCard.vue";
             v-for="(item, index) in store.cards"
             :key='`menu-card-${index}`'
             :title="item.title"
-            @click="console.log('hello')"
+            @click="routerPage(item.url)"
         >
         <template #sub-title>
             <div class="text-subtitle2">{{ item.subTitle }}</div>

@@ -17,17 +17,19 @@ import 'quasar/src/css/index.sass';
 
 /** Import icons Quasar */
 import '@quasar/extras/material-icons/material-icons.css';
-import '@quasar/extras/material-icons-round/material-icons-round.css'
+import '@quasar/extras/material-icons-round/material-icons-round.css';
 
 const quasarSettings = { plugins: {} };
 
 /** import components (beta) */
 //todo перенести, доработать через цикл
-import NightDrawer from "./components/NightDrawer.vue";
+import NightDrawer from "./components/high/NightDrawer.vue";
+import NightCard from "./components/ui/NightCard.vue";
 
 createApp(App)
     .use(router)
     .use(pinia)
     .use(Quasar, quasarSettings)
     .component('NightDrawer', NightDrawer)
+    .component('NightCard', NightCard)
     .mount('#app')

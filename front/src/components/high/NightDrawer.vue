@@ -1,10 +1,19 @@
 <script setup>
+import { useRouter } from 'vue-router';
+
 defineProps({
     items: {
         type: Array,
         default: () => ([]),
     },
 })
+
+const router = useRouter();
+
+
+const routerPage = (url) => {
+    router.push(url)
+}
 </script>
 
 <template>
@@ -22,6 +31,7 @@ defineProps({
                 :key="`item-menu-${index}`"
                 clickable
                 v-ripple
+                @click="routerPage(item.url)"
             >
                 <q-item-section avatar>
                     <q-icon :name="item.icon" size="sm" />
