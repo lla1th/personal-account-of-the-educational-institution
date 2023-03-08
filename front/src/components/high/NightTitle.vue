@@ -18,7 +18,8 @@ defineProps({
   >
     <div class="flex col-grow night-page-title__title">
       <component
-        :is="!subtitle ? 'h1' : 'h3'"
+        :is="!subtitle ? 'h3' : 'h5'"
+        :class="[{ 'medium': !subtitle }]"
       >
         {{ title }}
       </component>
