@@ -26,7 +26,7 @@ import mockDataTable from '../entities/mockDataTable';
             <div v-if="head.name === 'lessons'">
               {{ props.row[head.name] }}
             </div>
-            <div v-else-if="head.name === 'monday'" />
+            <div />
           </q-td>
         </q-tr>
       </template>
