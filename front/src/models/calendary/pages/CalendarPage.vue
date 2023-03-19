@@ -55,7 +55,7 @@ store.searchSchedule();
       <template #body="props">
         <q-tr :props="props">
           <q-td
-            v-for="(head, index) in headers()"
+            v-for="(head, index) in props.cols"
             :key="`rows-${index}`"
           >
             <div v-if="head.name === 'lessons'">

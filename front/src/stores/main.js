@@ -3,6 +3,8 @@ import { defineStore } from 'pinia';
 
 import menuNavigation from '../entities/menuNavigation';
 
+import router from '../router/routers';
+
 /**
  * Данный store соддержит общую информацию по проекту
  */
@@ -14,6 +16,10 @@ export const useMainStore = defineStore('main', () => {
     miniMenu.value = status;
   };
 
+  const routerPage = (url) => {
+    router.push(url);
+  };
+
   return {
     // state
     menu,
@@ -21,5 +27,6 @@ export const useMainStore = defineStore('main', () => {
 
     // actions
     chooseModal,
+    routerPage,
   };
 });

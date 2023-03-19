@@ -1,15 +1,12 @@
 <script setup>
 // imports
-import { useRouter } from 'vue-router';
 import { useHomeStore } from '../../../stores/home';
+import { useMainStore } from '../../../stores/main';
+
+const mainStore = useMainStore();
 
 const store = useHomeStore();
 
-const router = useRouter();
-
-const routerPage = (url) => {
-  router.push(url);
-};
 </script>
 
 <template>
@@ -20,7 +17,7 @@ const routerPage = (url) => {
         v-for="(item, index) in store.cards"
         :key="`menu-card-${index}`"
         :title="item.title"
-        @click="routerPage(item.url)"
+        @click="mainStore.routerPage(item.url)"
       >
         <template #sub-title>
           <div class="text-subtitle2">

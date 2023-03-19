@@ -9,6 +9,26 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  hasButton: {
+    type: Boolean,
+    default: false,
+  },
+  buttonLabel: {
+    type: String,
+    default: () => '',
+  },
+  getIconLeft: {
+    type: String,
+    default: () => '',
+  },
+  buttonOutline: {
+    type: Boolean,
+    default: false,
+  },
+  disable: {
+    type: Boolean,
+    default: false,
+  },
 });
 </script>
 
@@ -16,13 +36,37 @@ defineProps({
   <section
     class="night-title flex justify-between"
   >
-    <div class="flex col-grow night-page-title__title">
-      <component
-        :is="!subtitle ? 'h4' : 'h5'"
-        :class="[{ 'medium': !subtitle }]"
-      >
-        {{ title }}
-      </component>
+    <div class="flex-grow-1">
+      <div class="col-grow night-page-title__title">
+        <component
+            :is="!subtitle ? 'h4' : 'h5'"
+            :class="[{ 'medium': !subtitle }]"
+        >
+          {{ title }}
+        </component>
+      </div>
+    </div>
+    <div
+      v-if="hasButton"
+      class="flex justify-end"
+    >
+      <slot name="action">
+        <q-btn
+          :disable="disable"
+          :outline="buttonOutline"
+          @click="$emit('click')"
+          push
+        >
+          <q-icon
+              v-if="getIconLeft.length"
+              left
+              :name="getIconLeft"
+          />
+          <div class="row">
+            {{ buttonLabel }}
+          </div>
+        </q-btn>
+      </slot>
     </div>
   </section>
 </template>
