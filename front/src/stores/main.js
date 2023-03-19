@@ -1,31 +1,25 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
-import menuNavigation from '../entities/menuNavigation.js';
+import menuNavigation from '../entities/menuNavigation';
 
 /**
-  Подсказка для меня, при работе с copmosition AAAAPI
-  через ref - state
-  через computed - getters
-  через стрелочные функции - actions
-    мутации мертвы :)
-*/
-
+ * Данный store соддержит общую информацию по проекту
+ */
 export const useMainStore = defineStore('main', () => {
-    const menu = ref(menuNavigation());
-    const miniMenu = ref(true);
+  const menu = ref(menuNavigation());
+  const miniMenu = ref(true);
 
+  const chooseModal = (status = false) => {
+    miniMenu.value = status;
+  };
 
-    const chooseModal = (status = false) => {
-        miniMenu.value = status;
-    }
+  return {
+    // state
+    menu,
+    miniMenu,
 
-    return {
-        // state
-        menu,
-        miniMenu,
-
-        // actions
-        chooseModal,
-    };
+    // actions
+    chooseModal,
+  };
 });

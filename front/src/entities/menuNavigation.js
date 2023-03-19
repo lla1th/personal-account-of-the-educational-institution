@@ -7,6 +7,6 @@ export default () => [
   {
     icon: 'r_calendar_month',
     name: 'Расписание',
-    url: 'calendar',
+    url: '/calendar',
   },
 ];

@@ -7,7 +7,7 @@ export default () => [
   {
     title: 'Редактировать расписание',
     subTitle: 'Изменить/создать расписания занятий',
-    url: 'calendar/changes',
+    url: 'schedule/registry',
   },
   {
     title: 'Электронная зачетка',

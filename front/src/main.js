@@ -18,8 +18,6 @@ import NightDrawer from './components/high/NightDrawer.vue';
 import NightCard from './components/ui/NightCard.vue';
 import NightTitle from './components/high/NightTitle.vue';
 
-const pinia = createPinia();
-
 const components = [NightTitle, NightCard, NightDrawer];
 
 const quasarSettings = { plugins: {} };
@@ -34,7 +32,7 @@ const initApp = async () => {
   });
 
   app.use(router)
-    .use(pinia)
+    .use(createPinia())
     .use(Quasar, quasarSettings);
 
   app.mount('#app');
