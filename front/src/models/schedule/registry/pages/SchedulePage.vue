@@ -1,6 +1,10 @@
 <script setup>
-import headers from '../entities/headers';
 import { useMainStore } from '../../../../stores/main';
+/* Components */
+import SheduleModal from '../components/ScheduleModal.vue';
+
+/* Entities */
+import headers from '../entities/headers';
 
 const mainStore = useMainStore();
 </script>
@@ -43,5 +47,8 @@ const mainStore = useMainStore();
         </q-tr>
       </template>
     </q-table>
+    <SheduleModal
+      title="Создать расписание"
+    />
   </q-page>
 </template>

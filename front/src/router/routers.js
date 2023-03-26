@@ -4,7 +4,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../models/home/pages/HomePage.vue';
 import CalendarPage from '../models/calendary/pages/CalendarPage.vue';
 import SchedulePage from '../models/schedule/registry/pages/SchedulePage.vue';
-import ScheduleDetailPage from '../models/schedule/detail/pages/ScheduleDetailPage.vue';
 
 const routes = [
   { path: '/', name: 'Home', component: HomePage },
@@ -17,11 +16,6 @@ const routes = [
         path: 'registry',
         name: 'scheduleRegistry',
         component: SchedulePage,
-      },
-      {
-        path: 'create',
-        name: 'createSchedule',
-        component: ScheduleDetailPage,
       },
     ],
   },

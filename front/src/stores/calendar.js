@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import mockDataTable from '@/models/calendary/entities/mockDataTable.js';
+import mockDataTable from '@/models/calendary/entities/mockDataTable';
 
 export const useCalendarStore = defineStore('calendar', () => {
   const elements = ref(mockDataTable());
