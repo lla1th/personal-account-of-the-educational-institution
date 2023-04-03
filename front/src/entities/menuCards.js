@@ -12,11 +12,11 @@ export default () => [
   {
     title: 'Электронная зачетка',
     subTitle: 'Оценки, домашнее задание и лекции',
-    url: 'information/student',
+    url: 'journal/student',
   },
   {
     title: 'Электронный журнал',
     subTitle: 'Выставить задание и оценить студентов',
-    url: 'information/teacher',
+    url: 'journal/teacher/registry',
   },
 ];

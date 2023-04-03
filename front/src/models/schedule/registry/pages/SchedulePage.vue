@@ -1,12 +1,30 @@
 <script setup>
-import { useMainStore } from '../../../../stores/main';
+import { useRegistryChangeSchedule } from '../../../../stores/changesSchedule/registry';
+import { useModalChangeSchedule } from '../../../../stores/changesSchedule/modal';
+
 /* Components */
-import SheduleModal from '../components/ScheduleModal.vue';
+import ScheduleModal from '../components/ScheduleModal.vue';
 
 /* Entities */
 import headers from '../entities/headers';
 
-const mainStore = useMainStore();
+/** Хранилище раздела */
+const registryChangeSchedule = useRegistryChangeSchedule();
+
+/** Хранилище модального окна */
+const modalChangeSchedule = useModalChangeSchedule();
+
+const dateFormat = (date) => {
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+
+  const format = new Intl.DateTimeFormat('ru-RU', options);
+
+  return format.format(new Date());
+};
 </script>
 
 <template>
@@ -15,11 +33,11 @@ const mainStore = useMainStore();
       title="Редактирование учебного расписания"
       has-button
       button-label="Создать расписание"
-      @click="mainStore.routerPage('create')"
+      @click="modalChangeSchedule.$patch({ viewModalSchedule: true })"
     />
     <q-table
       :columns="headers()"
-      :rows="[]"
+      :rows="registryChangeSchedule.elements"
       row-key="label"
       separator="cell"
       class="q-mt-lg"
@@ -42,12 +60,26 @@ const mainStore = useMainStore();
             v-for="(head, index) in props.cols"
             :key="`rows-${index}`"
           >
-            {{ props.row[head.name] }}
+            <div
+              v-if="head.name === 'group'"
+              class="column"
+            >
+              {{ props.row[head.name]?.name }}
+              <span>
+                {{ props.row.subGroup?.name }}
+              </span>
+            </div>
+            <div v-else-if="head.name === 'date'">
+              {{ dateFormat(props.row[head.name]) }}
+            </div>
+            <div v-else>
+              {{ props.row[head.name]?.name }}
+            </div>
           </q-td>
         </q-tr>
       </template>
     </q-table>
-    <SheduleModal
+    <ScheduleModal
       title="Создать расписание"
     />
   </q-page>

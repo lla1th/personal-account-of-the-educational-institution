@@ -1,31 +1,73 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import moment from 'moment';
+import useQuasar from 'quasar/src/composables/use-quasar';
 
-export const useRegistryChangeSchedule = defineStore('registryChangeSchedule', () => {
+import { useRegistryChangeSchedule } from './registry';
+
+export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
   const form = ref({
-    date: moment(new Date()).format('DD-MM-YYYY'),
+    id: '',
+    date: moment(new Date()).format('DD.MM.YYYY'),
     well: '',
     group: '',
+    selfTraining: false,
+    subGroupsEnable: false,
+    subGroup: '',
     pair: '',
     lesson: '',
     teacher: '',
     cabinet: '',
   });
 
+  const $q = useQuasar();
+
+  const registryChangeSchedule = useRegistryChangeSchedule();
+
+  const viewModalSchedule = ref(false);
+
   /**
-     * Метод по обновлению состояние state в pinia
-     * @param state
-     * @param content
-     * @param key
-     * @constructor
-     */
-  const UPDATE_FORM = ({ content, key }) => {
-    form.value = !key ? content : { ...form.value, [key]: content };
+   * Очистка стейта, для модных и молодежных ( помогите )
+   */
+  const $reset = () => {
+    viewModalSchedule.value = false;
+
+    form.value = {
+      id: '',
+      date: moment(new Date()).format('DD.MM.YYYY'),
+      well: '',
+      group: '',
+      selfTraining: false,
+      subGroup: '',
+      pair: '',
+      lesson: '',
+      teacher: '',
+      cabinet: '',
+    };
+  };
+
+  const saveSchedule = () => {
+    registryChangeSchedule.addNewScheduleItem(form.value);
+
+    viewModalSchedule.value = false;
+
+    $reset();
+
+    return $q.notify({
+      progress: true,
+      message: 'Создание прошло успешно',
+      color: 'primary',
+    });
   };
 
   return {
+    /** Очистка */
+    $reset,
+
+    /** Хранилище */
     form,
-    UPDATE_FORM,
+    viewModalSchedule,
+
+    saveSchedule,
   };
 });

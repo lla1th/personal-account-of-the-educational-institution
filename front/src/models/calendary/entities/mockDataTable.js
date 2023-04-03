@@ -2,52 +2,52 @@ export default () => [
   {
     lessons: '1 пара',
     monday: {
-      text: 'hello',
-      test: 'mazafaka',
+      text: 'Текст',
+      test: 'тут была шутка',
     },
     tuesday: {
-      text: 'hello',
-      test: 'mazafaka',
+      text: 'Текст',
+      test: 'тут была шутка',
     },
     wednesday: {
-      text: 'hello',
-      test: 'mazafaka',
+      text: 'Текст',
+      test: 'тут была шутка',
     },
     thursday: {
-      text: 'hello',
-      test: 'mazafaka',
+      text: 'Текст',
+      test: 'тут была шутка',
     },
     friday: {
-      text: 'hello',
-      test: 'mazafaka',
+      text: 'Текст',
+      test: 'тут была шутка',
     },
     saturday: {
       id: 'uuid',
-      text: 'hello',
-      test: 'mazafaka',
+      text: 'Текст',
+      test: 'тут была шутка',
     },
   },
   {
     lessons: '2 пара',
     monday: {
-      text: 'hello',
-      test: 'mazafaka',
+      text: 'Текст',
+      test: 'тут была шутка',
     },
     tuesday: {
-      text: 'hello',
-      test: 'mazafaka',
+      text: 'Текст',
+      test: 'тут была шутка',
     },
     wednesday: {
-      text: 'hello',
-      test: 'mazafaka',
+      text: 'Текст',
+      test: 'тут была шутка',
     },
     thursday: {
-      text: 'hello',
-      test: 'mazafaka',
+      text: 'Текст',
+      test: 'тут была шутка',
     },
     friday: {
-      text: 'hello',
-      test: 'mazafaka',
+      text: 'Текст',
+      test: 'тут была шутка',
     },
   },
 ];

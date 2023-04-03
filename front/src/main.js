@@ -13,14 +13,17 @@ import 'quasar/src/css/index.sass';
 import '@quasar/extras/material-icons/material-icons.css';
 import '@quasar/extras/material-icons-round/material-icons-round.css';
 
-/** import components */
+/** Import language to quasar */
+import langRu from 'quasar/lang/ru';
+
+/** Import components */
 import NightDrawer from './components/high/NightDrawer.vue';
 import NightCard from './components/ui/NightCard.vue';
 import NightTitle from './components/high/NightTitle.vue';
 
 const components = [NightTitle, NightCard, NightDrawer];
 
-const quasarSettings = { plugins: {} };
+const quasarSettings = { plugins: {}, lang: langRu };
 
 const initApp = async () => {
   const app = createApp(App);

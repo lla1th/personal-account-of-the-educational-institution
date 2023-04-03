@@ -1,5 +1,11 @@
 export default () => [
   {
+    name: 'date',
+    label: 'Дата',
+    width: '8%',
+    align: 'left',
+  },
+  {
     name: 'well',
     label: 'Курс',
     width: '8%',

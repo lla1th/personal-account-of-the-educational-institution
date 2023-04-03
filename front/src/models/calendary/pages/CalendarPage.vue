@@ -19,7 +19,7 @@ store.searchSchedule();
           filled
           dense
           required
-          :options="['1','2','3']"
+          :options="['ИП1-41','2','3']"
           use-input
           label="Выбрать группу"
           :model-value="store.search"

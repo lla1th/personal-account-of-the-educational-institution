@@ -79,6 +79,8 @@ defineProps({
     min-height: 52px
 
 .night-title
+  margin:
+    top: 30px
   @include titleFlexBasic(100%)
   &_action
     @include titleFlexBasic(calc(100% - 200px))
