@@ -1,7 +1,8 @@
 <script setup>
 import headers from '../entities/headers';
-import students from '../../../../entities/students';
+import { useDetailAcademicJournal } from '../../../../stores/academicJournal/detail';
 
+const detailAcademicJournal = useDetailAcademicJournal();
 </script>
 
 <template>
@@ -15,7 +16,7 @@ import students from '../../../../entities/students';
 
     <q-table
       :columns="headers()"
-      :rows="students()"
+      :rows="detailAcademicJournal.items"
       row-key="label"
       separator="cell"
       class="q-mt-lg"
@@ -41,6 +42,11 @@ import students from '../../../../entities/students';
             <div
               v-if="head.name === 'group'"
               class="column"
+            >
+              {{ props.row[head.name] }}
+            </div>
+            <div
+              v-else-if="head.name === 'date'"
             >
               {{ props.row[head.name] }}
             </div>
