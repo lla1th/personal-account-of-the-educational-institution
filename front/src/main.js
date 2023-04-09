@@ -20,7 +20,7 @@ import NightCard from './components/ui/NightCard.vue';
 import NightTitle from './components/high/NightTitle.vue';
 
 /** Import миксинов */
-// import mixins from './mixins';
+// import help from './help';
 
 const components = [NightTitle, NightCard, NightDrawer];
 

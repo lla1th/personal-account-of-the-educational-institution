@@ -30,6 +30,8 @@ defineProps({
     default: false,
   },
 });
+
+defineEmits(['ButtonClick']);
 </script>
 
 <template>
@@ -39,8 +41,8 @@ defineProps({
     <div class="flex-grow-1">
       <div class="col-grow night-page-title__title">
         <component
-            :is="!subtitle ? 'h4' : 'h5'"
-            :class="[{ 'medium': !subtitle }]"
+          :is="!subtitle ? 'h4' : 'h5'"
+          :class="[{ 'medium': !subtitle }]"
         >
           {{ title }}
         </component>
@@ -54,13 +56,13 @@ defineProps({
         <q-btn
           :disable="disable"
           :outline="buttonOutline"
-          @click="$emit('click')"
+          @click="$emit('ButtonClick')"
           push
         >
           <q-icon
-              v-if="getIconLeft.length"
-              left
-              :name="getIconLeft"
+            v-if="getIconLeft.length"
+            left
+            :name="getIconLeft"
           />
           <div class="row">
             {{ buttonLabel }}

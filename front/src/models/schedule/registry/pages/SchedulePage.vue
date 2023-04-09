@@ -13,18 +13,6 @@ const registryChangeSchedule = useRegistryChangeSchedule();
 
 /** Хранилище модального окна */
 const modalChangeSchedule = useModalChangeSchedule();
-
-const dateFormat = (date) => {
-  const options = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  };
-
-  const format = new Intl.DateTimeFormat('ru-RU', options);
-
-  return format.format(new Date());
-};
 </script>
 
 <template>
@@ -33,7 +21,7 @@ const dateFormat = (date) => {
       title="Редактирование учебного расписания"
       has-button
       button-label="Создать расписание"
-      @click="modalChangeSchedule.$patch({ viewModalSchedule: true })"
+      @ButtonClick="modalChangeSchedule.$patch({ viewModalSchedule: true })"
     />
     <q-table
       :columns="headers()"
@@ -70,7 +58,7 @@ const dateFormat = (date) => {
               </span>
             </div>
             <div v-else-if="head.name === 'date'">
-              {{ dateFormat(props.row[head.name]) }}
+              {{ props.row[head.name] }}
             </div>
             <div v-else>
               {{ props.row[head.name]?.name }}
