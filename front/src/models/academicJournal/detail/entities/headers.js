@@ -30,7 +30,7 @@ export default () => ([
     align: 'left',
   },
   {
-    name: 'comment',
+    name: 'message',
     label: 'Сообщение для студента',
     width: '40%',
     align: 'left',

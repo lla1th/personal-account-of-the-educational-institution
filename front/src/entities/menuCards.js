@@ -2,21 +2,21 @@ export default () => [
   {
     title: 'Расписание',
     subTitle: 'Просмотр расписания занятий',
-    url: 'calendar',
+    url: '/calendar',
   },
   {
     title: 'Редактировать расписание',
     subTitle: 'Изменить/создать расписания занятий',
-    url: 'schedule/registry',
+    url: '/schedule/registry',
   },
   {
     title: 'Электронная зачетка',
     subTitle: 'Оценки, домашнее задание и лекции',
-    url: 'journal/student',
+    url: '/journal/student/registry',
   },
   {
     title: 'Электронный журнал',
     subTitle: 'Выставить задание и оценить студентов',
-    url: 'journal/teacher/registry',
+    url: '/journal/teacher/registry',
   },
 ];

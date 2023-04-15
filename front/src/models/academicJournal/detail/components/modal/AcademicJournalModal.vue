@@ -98,25 +98,35 @@ const updateForm = (key, content) => {
               dense
               outlined
               use-input
+              :options="modalAcademicJournal.dataInputs.well"
+              option-label="name"
+              option-value="id"
               label="Курс"
               class="q-mb-md"
+              :model-value="modalAcademicJournal.form.well"
+              @update:model-value="updateForm('well', $event)"
             />
             <q-select
               dense
               outlined
               use-input
+              :options="modalAcademicJournal.dataInputs.group"
+              option-label="name"
+              option-value="id"
               label="Группа"
               class="q-mb-md"
+              :model-value="modalAcademicJournal.form.group"
+              @update:model-value="updateForm('group', $event)"
             />
             <q-select
               outlined
               use-input
               dense
               label="ФИО студента"
-              :options="[]"
+              :options="modalAcademicJournal.dataInputs.students"
               class="q-mb-md"
               option-value="id"
-              option-label="name"
+              option-label="fullName"
               :model-value="modalAcademicJournal.form.student"
               @update:model-value="updateForm('student', $event)"
             />
@@ -149,6 +159,7 @@ const updateForm = (key, content) => {
               size="md"
               color="primary"
               label="Создать"
+              @click="modalAcademicJournal.createAssessment"
             />
             <q-btn
               outline

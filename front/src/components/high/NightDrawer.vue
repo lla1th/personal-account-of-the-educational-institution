@@ -16,9 +16,10 @@ const routerPage = (url) => {
 </script>
 
 <template>
+  <!-- todo Переделать breakpoint -->
   <q-drawer
     show-if-above
-    :width="200"
+    :width="250"
     :breakpoint="500"
     bordered
     class="bg-grey-3"

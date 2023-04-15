@@ -76,7 +76,7 @@ const modalAcademicJournal = useModalAcademicJournal();
             <div
               v-else-if="head.name === 'date'"
             >
-              {{ formatDate(props.row[head.name]) }}
+              {{ props.row[head.name] }}
             </div>
             <div v-else>
               {{ props.row[head.name] }}
