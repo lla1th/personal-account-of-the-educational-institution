@@ -1,16 +1,6 @@
 <script setup>
-/** *****************************************************************
- * Заметка*                                                        *
- *                                                                 *
- * Данный компоненты должен быть вынесен в отдельный компонент!    *
- * намименование: 'NightSidePage'                                  *
- * слоты: как указаны ниже, НО с другим котентом
- *
- * 28.03.2023 - да черт его знает, я больше не понимаю нихрена
- *
- *                                                                 *
- ****************************************************************** */
 /* pinia */
+import { storeToRefs } from 'pinia';
 import { useModalChangeSchedule } from '../../../../stores/changesSchedule/modal';
 
 /** entities */
@@ -20,6 +10,17 @@ import {
 } from '../../../../entities/mock';
 
 const modalChangeSchedule = useModalChangeSchedule();
+
+/* state */
+const {
+  form,
+  viewModalSchedule,
+} = storeToRefs(modalChangeSchedule);
+
+/* actions */
+const {
+  saveSchedule,
+} = modalChangeSchedule;
 
 /* props */
 defineProps({
@@ -44,6 +45,10 @@ const updateForm = (key, content) => {
   });
 };
 
+const closeModal = () => {
+  modalChangeSchedule.$patch({ viewModalSchedule: false });
+};
+
 </script>
 
 <template>
@@ -52,14 +57,14 @@ const updateForm = (key, content) => {
     elevated
     :width="500"
     overlay
-    :model-value="modalChangeSchedule.viewModalSchedule"
+    :model-value="viewModalSchedule"
     side="right"
     mini-to-overlay
     bordered
     no-swipe-close
     no-swipe-backdrop
     behavior="mobile"
-    @update:model-value="modalChangeSchedule.$patch({ viewModalSchedule: false })"
+    @update:model-value="closeModal"
   >
     <div class="night-side-page__container q-pa-xl column no-wrap justify-between">
       <div class="night-side-page__title q-pb-lg">
@@ -80,7 +85,7 @@ const updateForm = (key, content) => {
               bg-color="white"
               label="Дата"
               mask="##.##.####"
-              :model-value="modalChangeSchedule.form.date"
+              :model-value="form.date"
               class="q-mb-md"
             >
               <template #append>
@@ -95,7 +100,7 @@ const updateForm = (key, content) => {
                   >
                     <q-date
                       mask="DD.MM.YYYY"
-                      :model-value="modalChangeSchedule.form.date"
+                      :model-value="form.date"
                       label="close"
                       @update:model-value="updateForm('date', $event)"
                     >
@@ -120,7 +125,7 @@ const updateForm = (key, content) => {
               option-label="name"
               :options="well"
               label="Курс"
-              :model-value="modalChangeSchedule.form.well"
+              :model-value="form.well"
               @update:model-value="updateForm('well', $event)"
             />
             <q-select
@@ -132,23 +137,23 @@ const updateForm = (key, content) => {
               option-label="name"
               :options="group"
               class="q-my-md"
-              :model-value="modalChangeSchedule.form.group"
+              :model-value="form.group"
               @update:model-value="updateForm('group', $event)"
             />
             <div class="row">
               <q-checkbox
                 label="День самоподготовки"
-                :model-value="modalChangeSchedule.form.selfTraining"
+                :model-value="form.selfTraining"
                 @update:model-value="updateForm('selfTraining', $event)"
               />
               <q-checkbox
                 label="Подгруппы"
-                :model-value="modalChangeSchedule.form.subGroupsEnable"
+                :model-value="form.subGroupsEnable"
                 @update:model-value="updateForm('subGroupsEnable', $event)"
               />
             </div>
             <q-select
-              v-if="modalChangeSchedule.form.subGroupsEnable"
+              v-if="form.subGroupsEnable"
               dense
               outlined
               bg-color="white"
@@ -157,8 +162,8 @@ const updateForm = (key, content) => {
               :options="subGroups()"
               option-value="id"
               option-label="name"
-              :model-value="modalChangeSchedule.form.subGroup"
-              :disable="modalChangeSchedule.form.selfTraining"
+              :model-value="form.subGroup"
+              :disable="form.selfTraining"
               @update:model-value="updateForm('subGroup', $event)"
             />
             <q-select
@@ -170,8 +175,8 @@ const updateForm = (key, content) => {
               option-value="id"
               option-label="name"
               :options="pair"
-              :disable="modalChangeSchedule.form.selfTraining"
-              :model-value="modalChangeSchedule.form.pair"
+              :disable="form.selfTraining"
+              :model-value="form.pair"
               @update:model-value="updateForm('pair', $event)"
             />
             <q-select
@@ -183,8 +188,8 @@ const updateForm = (key, content) => {
               option-value="id"
               option-label="name"
               :options="lesson"
-              :disable="modalChangeSchedule.form.selfTraining"
-              :model-value="modalChangeSchedule.form.lesson"
+              :disable="form.selfTraining"
+              :model-value="form.lesson"
               @update:model-value="updateForm('lesson', $event)"
             />
             <q-select
@@ -196,8 +201,8 @@ const updateForm = (key, content) => {
               option-value="id"
               option-label="name"
               :options="teacher"
-              :disable="modalChangeSchedule.form.selfTraining"
-              :model-value="modalChangeSchedule.form.teacher"
+              :disable="form.selfTraining"
+              :model-value="form.teacher"
               @update:model-value="updateForm('teacher', $event)"
             />
             <q-select
@@ -209,8 +214,8 @@ const updateForm = (key, content) => {
               option-value="id"
               option-label="name"
               :options="cabinet"
-              :disable="modalChangeSchedule.form.selfTraining"
-              :model-value="modalChangeSchedule.form.cabinet"
+              :disable="form.selfTraining"
+              :model-value="form.cabinet"
               @update:model-value="updateForm('cabinet', $event)"
             />
           </slot>
@@ -225,14 +230,14 @@ const updateForm = (key, content) => {
               size="md"
               color="primary"
               label="Создать"
-              @click="modalChangeSchedule.saveSchedule()"
+              @click="saveSchedule()"
             />
             <q-btn
               outline
               size="md"
               color="primary"
               label="Отменить"
-              @click="modalChangeSchedule.$patch({ viewModalSchedule: false })"
+              @click="closeModal"
             />
           </div>
         </slot>

@@ -1,10 +1,10 @@
 <script setup>
-import { useRegistryAcademicJournal } from '../../../../stores/academicJournal/registry';
+import { useRegistryAcademicJournalStudent } from '../../../../stores/academicJournalStudent/registry';
 import { useMainStore } from '../../../../stores/main';
 
 const mainStore = useMainStore();
+const registryAcademicJournalStudent = useRegistryAcademicJournalStudent();
 
-const registryAcademicJournal = useRegistryAcademicJournal();
 </script>
 
 <template>
@@ -12,7 +12,7 @@ const registryAcademicJournal = useRegistryAcademicJournal();
     <NightTitle title="Выберите предмет" />
     <div class="q-pa-md row items-start content-start q-gutter-lg">
       <NightCard
-        v-for="(item, index) in registryAcademicJournal.menuListStudySubjects"
+        v-for="(item, index) in registryAcademicJournalStudent.menuListStudySubjects"
         :key="`menu-card-${index}`"
         :title="item.title"
         @click="mainStore.routerPage(item.url)"
@@ -26,3 +26,7 @@ const registryAcademicJournal = useRegistryAcademicJournal();
     </div>
   </q-page>
 </template>
+
+<style scoped>
+
+</style>

@@ -1,13 +1,11 @@
 <script setup>
-import { useDetailAcademicJournal } from '../../../../stores/academicJournal/detail';
-import { useModalAcademicJournal } from '../../../../stores/academicJournal/modal';
+import { useDetailAcademicJournal } from '../../../../stores/academicJournalTeacher/detail';
+import { useModalAcademicJournal } from '../../../../stores/academicJournalTeacher/modal';
 
 import AcademicJournalModal from '../components/modal/AcademicJournalModal.vue';
 
 /** entities */
 import headers from '../entities/headers';
-/** help config */
-import { formatDate } from '../../../../help/index';
 
 const detailAcademicJournal = useDetailAcademicJournal();
 

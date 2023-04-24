@@ -1,5 +1,5 @@
 <script setup>
-import { useModalAcademicJournal } from '../../../../../stores/academicJournal/modal';
+import { useModalAcademicJournal } from '../../../../../stores/academicJournalTeacher/modal';
 
 const modalAcademicJournal = useModalAcademicJournal();
 
