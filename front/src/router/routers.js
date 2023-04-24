@@ -1,14 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 // components
+import AuthPage from '../models/auth/pages/AuthPage.vue';
 import HomePage from '../models/home/pages/HomePage.vue';
 import CalendarPage from '../models/calendary/pages/CalendarPage.vue';
 import SchedulePage from '../models/schedule/registry/pages/SchedulePage.vue';
-import AcademicJournalRegistry from '../models/academicJournal/registry/pages/AcademicJournalRegistry.vue';
-import AcademicJournalDetail from '../models/academicJournal/detail/pages/AcademicJournalDetail.vue';
+import AcademicJournalDetail from '../models/academicJournalTeacher/detail/pages/AcademicJournalDetail.vue';
+import AcademicJournalRegistry from '../models/academicJournalTeacher/registry/pages/AcademicJournalRegistry.vue';
+
+import AcademicJournalStudentRegistry from '../models/academicJournalStudent/registry/pages/AcademicJournalStudentRegistry.vue';
 
 const routes = [
   { path: '/', name: 'Home', component: HomePage },
+  {
+    path: '/auth', name: 'Auth', component: AuthPage, meta: { layout: 'auth-layout' },
+  },
   { path: '/calendar', name: 'Calendar', component: CalendarPage },
   {
     path: '/schedule',
@@ -30,6 +36,11 @@ const routes = [
     path: '/journal/teacher/detail/:id',
     name: 'academicJournalTeacherDetail',
     component: AcademicJournalDetail,
+  },
+  {
+    path: '/journal/student/registry',
+    name: 'academicJournalStudentRegistry',
+    component: AcademicJournalStudentRegistry,
   },
 ];
 

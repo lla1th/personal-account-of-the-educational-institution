@@ -18,6 +18,8 @@ import '@quasar/extras/material-icons-round/material-icons-round.css';
 import NightDrawer from './components/high/NightDrawer.vue';
 import NightCard from './components/ui/NightCard.vue';
 import NightTitle from './components/high/NightTitle.vue';
+import AuthLayout from './layout/AuthLayout.vue';
+import MainPageLayout from './layout/MainPageLayout.vue';
 
 /** Import миксинов */
 // import help from './help';
@@ -28,6 +30,9 @@ const quasarSettings = { plugins: {}, lang: langRu };
 
 const initApp = async () => {
   const app = createApp(App);
+
+  app.component('AuthLayout', AuthLayout);
+  app.component('MainPageLayout', MainPageLayout);
 
   components.forEach((element) => {
     // eslint-disable-next-line no-underscore-dangle

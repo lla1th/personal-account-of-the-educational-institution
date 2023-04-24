@@ -1,23 +1,14 @@
 <script setup>
-import { useMainStore } from './stores/main';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
-const store = useMainStore();
+const route = useRoute();
+
+const layout = computed(() => route.meta.layout || 'MainPageLayout');
 </script>
 
 <template>
-  <q-layout view="hHh lpr lff">
-    <q-header elevated>
-      <q-toolbar>
-        <q-toolbar-title>Приложение</q-toolbar-title>
-      </q-toolbar>
-    </q-header>
-    <NightDrawer
-      :mini="!store.miniMenu"
-      :items="store.menu"
-      @size-sidebar="store.chooseModal(!store.miniMenu)"
-    />
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-  </q-layout>
+  <component :is="layout">
+    <router-view />
+  </component>
 </template>
