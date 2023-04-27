@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.8'
 
 x-base:
   &base
@@ -17,4 +17,31 @@ services:
       - ./postgres/db_backups:/backups
       - ./postgres/pg:/var/lib/postgresql/data
     mem_reservation: 128m
-    mem_limit: 512m
+
+  node_api:
+    <<: *base
+    build: ./containers/node-api
+    ports:
+      - "127.0.0.1:8081:8081"
+    volumes:
+      - ./api/app:/app
+      - ./api/app/dist:/dist
+      - ./api/app/node_modules:/node_modules
+    env_file:
+      - .env
+    mem_reservation: 128m
+
+
+  fusionauth:
+    <<: *base
+    build: ./containers/fusionauth
+    ports:
+      - "9011:9011"
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/fusionauth_db
+      FUSIONAUTH_APP_RUNTIME_MODE: development
+      FUSIONAUTH_APP_URL: http://fusionauth:9011
+    depends_on:
+      - postgres

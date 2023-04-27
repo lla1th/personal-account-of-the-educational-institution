@@ -1,0 +1,1 @@
+FROM fusionauth/fusionauth-app:1.45.1
