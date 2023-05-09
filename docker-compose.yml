@@ -2,36 +2,12 @@ version: '3.8'
 
 x-base:
   &base
+  networks:
+    - net
   restart: always
 
 
 services:
-  postgres:
-    <<: *base
-    build: ./containers/postgres
-    ports:
-      - "127.0.0.1:5432:5432"
-    env_file:
-      - .env
-    volumes:
-      - ./postgres/db_backups:/backups
-      - ./postgres/pg:/var/lib/postgresql/data
-    mem_reservation: 128m
-
-  node_api:
-    <<: *base
-    build: ./containers/node-api
-    ports:
-      - "127.0.0.1:8081:8081"
-    volumes:
-      - ./api/app:/app
-      - ./api/app/dist:/dist
-      - ./api/app/node_modules:/node_modules
-    env_file:
-      - .env
-    mem_reservation: 128m
-
-
   fusionauth:
     <<: *base
     build: ./containers/fusionauth
@@ -45,3 +21,45 @@ services:
       FUSIONAUTH_APP_URL: http://fusionauth:9011
     depends_on:
       - postgres
+
+  node_api:
+    <<: *base
+    build: ./containers/node-api
+    ports:
+      - "127.0.0.1:8081:8081"
+    volumes:
+      - ./api-gateway/app:/app
+      - ./api-gateway/app/dist:/app/dist
+      - ./api-gateway/app/node_modules:/node_modules
+    env_file:
+      - .env
+    mem_reservation: 128m
+
+  node_schedule:
+    <<: *base
+    build: ./containers/node-schedule
+    ports:
+      - '127.0.0.1:8082:8082'
+    volumes:
+      - ./schedule/app:/app
+      - ./schedule/app/dist:/app/dist
+      - ./schedule/app/node_modules:/node_modules
+    env_file:
+      - .env
+    mem_reservation: 128m
+
+  postgres:
+    <<: *base
+    build: ./containers/postgres
+    ports:
+      - "127.0.0.1:5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - ./postgres/db_backups:/backups
+      - ./postgres/pg:/var/lib/postgresql/data
+    mem_reservation: 128m
+
+networks:
+  net:
+    driver: bridge

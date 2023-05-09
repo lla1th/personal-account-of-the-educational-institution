@@ -2,6 +2,7 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import moment from 'moment';
 import useQuasar from 'quasar/src/composables/use-quasar';
+import Api from '../../utils/Api';
 
 import { useRegistryChangeSchedule } from './registry';
 
@@ -46,10 +47,12 @@ export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
     };
   };
 
-  const saveSchedule = () => {
+  const saveSchedule = async () => {
     registryChangeSchedule.addNewScheduleItem(form.value);
 
     viewModalSchedule.value = false;
+
+    await Api.post('schedule', { ...form.value });
 
     $reset();
 

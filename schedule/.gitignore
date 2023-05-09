@@ -1,13 +1,6 @@
-node_modules
-package-lock.json
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+# compiled output
+/app/node_modules/
+/app/dist/
 
 # Logs
 logs
@@ -18,18 +11,21 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# Database data and services
-postgres/
-
-./package-lock.json
-node_modules/
-
 # OS
 .DS_Store
 
 # Tests
 /coverage
 /.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
 # IDE - VSCode
 .vscode/*
@@ -38,6 +34,3 @@ node_modules/
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# Env and secrets
-*.werf_secret_key
-*.env
