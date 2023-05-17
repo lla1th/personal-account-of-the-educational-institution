@@ -27,6 +27,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "nest-winston": "1.9.1",
+    "cookie-parser": "^1.4.6",
     "axios": "^1.4.0",
     "winston": "3.8.2",
     "winston-graylog2": "2.1.2"

@@ -1,8 +1,0 @@
-project: api
-configVersion: 1
----
-image: node_api
-dockerfile: Dockerfile
-args:
-  IMAGE_NODE: '{{ env "IMAGE_NODE" }}'
-  CI_API_V4_URL: '{{ env "CI_API_V4_URL" }}'

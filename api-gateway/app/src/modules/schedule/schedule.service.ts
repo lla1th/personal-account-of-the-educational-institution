@@ -7,7 +7,7 @@ export class ScheduleService {
   constructor(@Inject(SCHEDULE_API_TOOL) private databaseApi: Api) {}
 
   async getHello(): Promise<string> {
-    console.log('ysasathr');
+    console.log('3213213423');
     return 'eqwewq';
   }
 

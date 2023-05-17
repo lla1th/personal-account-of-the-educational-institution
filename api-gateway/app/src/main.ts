@@ -1,12 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import cookieParser from 'cookie-parser';
 import { WinstonModule } from 'nest-winston';
 import loggerConfig from './utils/logger.config';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger: WinstonModule.createLogger(loggerConfig),
   });
+  app.use(cookieParser('secret'));
   app.enableCors({
     exposedHeaders: ['Content-Disposition'],
     credentials: true,
