@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import moment from 'moment';
 
 import {
-  well, pair, lesson, teacher, cabinet, group,
+  well, pair, teacher, group,
 } from '../../entities/mock';
 
 import students from '../../entities/students';
@@ -27,9 +27,7 @@ export const useModalAcademicJournal = defineStore('modalAcademicJournal', () =>
   const dataInputs = ref({
     well,
     pair,
-    lesson,
     teacher,
-    cabinet,
     group,
     students: students(),
   });

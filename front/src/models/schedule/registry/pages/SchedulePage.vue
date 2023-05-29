@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted } from 'vue';
 import { useRegistryChangeSchedule } from '../../../../stores/changesSchedule/registry';
 import { useModalChangeSchedule } from '../../../../stores/changesSchedule/modal';
 
@@ -13,6 +14,10 @@ const registryChangeSchedule = useRegistryChangeSchedule();
 
 /** Хранилище модального окна */
 const modalChangeSchedule = useModalChangeSchedule();
+
+onMounted(() => {
+  registryChangeSchedule.getSchedules();
+});
 </script>
 
 <template>
@@ -21,7 +26,7 @@ const modalChangeSchedule = useModalChangeSchedule();
       title="Редактирование учебного расписания"
       has-button
       button-label="Создать расписание"
-      @ButtonClick="modalChangeSchedule.$patch({ viewModalSchedule: true })"
+      @ButtonClick="modalChangeSchedule.openModal()"
     />
     <q-table
       :columns="headers()"
@@ -58,6 +63,15 @@ const modalChangeSchedule = useModalChangeSchedule();
               </span>
             </div>
             <div v-else-if="head.name === 'date'">
+              {{ props.row[head.name] }}
+            </div>
+            <div v-else-if="head.name === 'pair'">
+              {{ props.row.pair }} Пара
+            </div>
+            <div v-else-if="head.name === 'well'">
+              {{ props.row.well }}
+            </div>
+            <div v-else-if="head.name === 'createdAt'">
               {{ props.row[head.name] }}
             </div>
             <div v-else>

@@ -6,7 +6,7 @@ import { useModalChangeSchedule } from '../../../../stores/changesSchedule/modal
 /** entities */
 import { subGroups } from '../../../../entities/index';
 import {
-  well, pair, lesson, teacher, cabinet, group,
+  well, pair, teacher, group,
 } from '../../../../entities/mock';
 
 const modalChangeSchedule = useModalChangeSchedule();
@@ -15,6 +15,7 @@ const modalChangeSchedule = useModalChangeSchedule();
 const {
   form,
   viewModalSchedule,
+  information,
 } = storeToRefs(modalChangeSchedule);
 
 /* actions */
@@ -126,6 +127,8 @@ const closeModal = () => {
               :options="well"
               label="Курс"
               :model-value="form.well"
+              emit-value
+              map-options
               @update:model-value="updateForm('well', $event)"
             />
             <q-select
@@ -138,6 +141,8 @@ const closeModal = () => {
               :options="group"
               class="q-my-md"
               :model-value="form.group"
+              emit-value
+              map-options
               @update:model-value="updateForm('group', $event)"
             />
             <div class="row">
@@ -164,6 +169,8 @@ const closeModal = () => {
               option-label="name"
               :model-value="form.subGroup"
               :disable="form.selfTraining"
+              emit-value
+              map-options
               @update:model-value="updateForm('subGroup', $event)"
             />
             <q-select
@@ -177,6 +184,8 @@ const closeModal = () => {
               :options="pair"
               :disable="form.selfTraining"
               :model-value="form.pair"
+              emit-value
+              map-options
               @update:model-value="updateForm('pair', $event)"
             />
             <q-select
@@ -187,9 +196,11 @@ const closeModal = () => {
               class="q-my-md"
               option-value="id"
               option-label="name"
-              :options="lesson"
+              :options="information.lessons"
               :disable="form.selfTraining"
               :model-value="form.lesson"
+              emit-value
+              map-options
               @update:model-value="updateForm('lesson', $event)"
             />
             <q-select
@@ -203,6 +214,8 @@ const closeModal = () => {
               :options="teacher"
               :disable="form.selfTraining"
               :model-value="form.teacher"
+              emit-value
+              map-options
               @update:model-value="updateForm('teacher', $event)"
             />
             <q-select
@@ -212,10 +225,12 @@ const closeModal = () => {
               label="Кабинет"
               class="q-my-md"
               option-value="id"
-              option-label="name"
-              :options="cabinet"
+              option-label="shortName"
+              :options="information.cabinets"
               :disable="form.selfTraining"
               :model-value="form.cabinet"
+              emit-value
+              map-options
               @update:model-value="updateForm('cabinet', $event)"
             />
           </slot>

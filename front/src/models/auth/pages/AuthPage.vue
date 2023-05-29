@@ -1,6 +1,7 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
 import { useAuthStore } from '../../../stores/auth';
 
 const auth = useAuthStore();
@@ -8,6 +9,10 @@ const auth = useAuthStore();
 const { authForm } = storeToRefs(auth);
 
 const router = useRouter();
+
+onMounted(() => {
+  auth.checkToken();
+});
 
 const updateForm = (key, content) => {
   auth.$patch({
@@ -45,7 +50,7 @@ const updateForm = (key, content) => {
           label="Войти"
           class="auth-form__btn"
           push
-          @click="router.push('/')"
+          @click="auth.sendAuth()"
         />
       </div>
     </div>

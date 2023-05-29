@@ -18,13 +18,16 @@ import '@quasar/extras/material-icons-round/material-icons-round.css';
 import NightDrawer from './components/high/NightDrawer.vue';
 import NightCard from './components/ui/NightCard.vue';
 import NightTitle from './components/high/NightTitle.vue';
+import NightSidePage from './components/high/NightSidePage.vue';
+
+/** pages */
 import AuthLayout from './layout/AuthLayout.vue';
 import MainPageLayout from './layout/MainPageLayout.vue';
 
 /** Import миксинов */
 // import help from './help';
 
-const components = [NightTitle, NightCard, NightDrawer];
+const components = [NightTitle, NightCard, NightDrawer, NightSidePage];
 
 const quasarSettings = { plugins: {}, lang: langRu };
 
@@ -42,6 +45,9 @@ const initApp = async () => {
 
   app.use(router)
     .use(createPinia())
+    .use(cors({
+      credentials: true,
+    }))
     .use(Quasar, quasarSettings);
 
   app.mount('#app');

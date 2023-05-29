@@ -19,4 +19,14 @@ export default () => [
     subTitle: 'Выставить задание и оценить студентов',
     url: '/journal/teacher/registry',
   },
+  {
+    title: 'Кабинеты',
+    subTitle: 'Добавить/редактировать учебные кабинеты',
+    url: '/cabinets',
+  },
+  {
+    title: 'Учебные предметы',
+    subTitle: 'Добавить/редактировать учебные предметы',
+    url: '/lessons',
+  },
 ];

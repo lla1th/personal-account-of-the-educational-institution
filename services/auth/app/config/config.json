@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "developer",
+    "password": "maratVikaSofa_404Laith",
+    "database": "schedule_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}

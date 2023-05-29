@@ -1,15 +1,12 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import moment from 'moment';
-import useQuasar from 'quasar/src/composables/use-quasar';
+import { date } from 'quasar';
 import Api from '../../utils/Api';
-
-import { useRegistryChangeSchedule } from './registry';
 
 export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
   const form = ref({
     id: '',
-    date: moment(new Date()).format('DD.MM.YYYY'),
+    date: new Date(),
     well: '',
     group: '',
     selfTraining: false,
@@ -21,9 +18,10 @@ export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
     cabinet: '',
   });
 
-  const $q = useQuasar();
-
-  const registryChangeSchedule = useRegistryChangeSchedule();
+  const information = ref({
+    cabinets: [],
+    lessons: [],
+  });
 
   const viewModalSchedule = ref(false);
 
@@ -35,7 +33,7 @@ export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
 
     form.value = {
       id: '',
-      date: moment(new Date()).format('DD.MM.YYYY'),
+      date: new Date(),
       well: '',
       group: '',
       selfTraining: false,
@@ -45,22 +43,38 @@ export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
       teacher: '',
       cabinet: '',
     };
+
+    information.value = {
+      cabinets: [],
+      lessons: [],
+    };
+  };
+
+  const openModal = async () => {
+    viewModalSchedule.value = !viewModalSchedule.value;
+
+    const { data: { data: { cabinets, lessons } } } = await Api.get('information');
+
+    information.value = {
+      cabinets,
+      lessons,
+    };
   };
 
   const saveSchedule = async () => {
-    registryChangeSchedule.addNewScheduleItem(form.value);
+    await Api.post('schedule', {
+      ...form.value,
+      date: date.formatDate(form.value.date, 'YYYY-MM-DDTHH:mm:ss.SSSZ'),
+    });
 
     viewModalSchedule.value = false;
-
-    await Api.post('schedule', { ...form.value });
-
     $reset();
 
-    return $q.notify({
-      progress: true,
-      message: 'Создание прошло успешно',
-      color: 'primary',
-    });
+    // return $q.notify({
+    //   progress: true,
+    //   message: 'Создание прошло успешно',
+    //   color: 'primary',
+    // });
   };
 
   return {
@@ -70,7 +84,9 @@ export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
     /** Хранилище */
     form,
     viewModalSchedule,
+    information,
 
     saveSchedule,
+    openModal,
   };
 });

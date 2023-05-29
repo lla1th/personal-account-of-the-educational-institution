@@ -2,7 +2,7 @@ import moment from 'moment';
 
 export default () => [
   {
-    id: '1',
+    id: '708b25eb-d909-448a-9fa3-66983a2084eb',
     shortName: 'Тест Т.Т',
     fullName: 'Тест Тестович Тестовал',
     date: moment().format('DD.MM.YYYY'),

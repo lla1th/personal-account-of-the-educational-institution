@@ -15,11 +15,7 @@ class Api {
       },
     });
 
-    this.post = async (url, data = {}, config = {}) => {
-      console.log(url, data, config, 'hhello');
-
-      return this.instance.post(url, data, config);
-    };
+    this.post = async (url, data = {}, config = {}) => this.instance.post(url, data, config);
 
     this.patch = async (url, data, config = {}) => this.instance.patch(url, data, config);
 
