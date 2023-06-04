@@ -12,7 +12,7 @@ async function bootstrap() {
   app.enableCors({
     exposedHeaders: ['Content-Disposition'],
     credentials: true,
-    origin: true,
+    origin: 'http://localhost:5173',
   });
   app.setGlobalPrefix('api/v1');
 

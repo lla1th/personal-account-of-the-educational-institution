@@ -6,22 +6,28 @@ import { useModalChangeSchedule } from '../../../../stores/changesSchedule/modal
 /** entities */
 import { subGroups } from '../../../../entities/index';
 import {
-  well, pair, teacher, group,
+  well, pair,
 } from '../../../../entities/mock';
+import { useAuthStore } from '../../../../stores/auth';
 
 const modalChangeSchedule = useModalChangeSchedule();
+const auth = useAuthStore();
 
 /* state */
 const {
   form,
   viewModalSchedule,
   information,
+  groups,
 } = storeToRefs(modalChangeSchedule);
 
 /* actions */
 const {
   saveSchedule,
 } = modalChangeSchedule;
+
+// todo убить
+modalChangeSchedule.getGroups();
 
 /* props */
 defineProps({
@@ -137,8 +143,8 @@ const closeModal = () => {
               bg-color="white"
               label="Группа"
               option-value="id"
-              option-label="name"
-              :options="group"
+              option-label="shortName"
+              :options="groups"
               class="q-my-md"
               :model-value="form.group"
               emit-value
@@ -210,8 +216,8 @@ const closeModal = () => {
               label="Преподаватель"
               class="q-my-md"
               option-value="id"
-              option-label="name"
-              :options="teacher"
+              option-label="fullName"
+              :options="auth.teacher"
               :disable="form.selfTraining"
               :model-value="form.teacher"
               emit-value

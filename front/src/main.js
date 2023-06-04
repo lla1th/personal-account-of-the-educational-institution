@@ -45,9 +45,6 @@ const initApp = async () => {
 
   app.use(router)
     .use(createPinia())
-    .use(cors({
-      credentials: true,
-    }))
     .use(Quasar, quasarSettings);
 
   app.mount('#app');

@@ -32,6 +32,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "sequelize": "^6.31.1",
+    "uuid": "^9.0.0",
     "sequelize-typescript": "^2.1.5"
   },
   "devDependencies": {

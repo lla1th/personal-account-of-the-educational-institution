@@ -1,5 +1,4 @@
 <script setup>
-import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 import { useAuthStore } from '../../../stores/auth';
@@ -7,8 +6,6 @@ import { useAuthStore } from '../../../stores/auth';
 const auth = useAuthStore();
 
 const { authForm } = storeToRefs(auth);
-
-const router = useRouter();
 
 onMounted(() => {
   auth.checkToken();

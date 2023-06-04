@@ -6,13 +6,7 @@ export default () => [
     align: 'left',
   },
   {
-    name: 'well',
-    label: 'Курс',
-    width: '8%',
-    align: 'left',
-  },
-  {
-    name: 'group',
+    name: 'groups',
     label: 'Группа',
     width: '8%',
     align: 'left',

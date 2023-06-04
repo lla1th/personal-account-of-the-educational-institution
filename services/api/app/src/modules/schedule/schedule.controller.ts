@@ -39,4 +39,9 @@ export class ScheduleController {
   getInformation(@Query() dto: any): Promise<any> {
     return this.scheduleService.getInformation(dto);
   }
+
+  @Get('group')
+  getGroups(@Query() dto: any): Promise<any> {
+    return this.scheduleService.getGroups(dto);
+  }
 }

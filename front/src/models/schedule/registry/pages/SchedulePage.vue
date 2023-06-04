@@ -2,6 +2,7 @@
 import { onMounted } from 'vue';
 import { useRegistryChangeSchedule } from '../../../../stores/changesSchedule/registry';
 import { useModalChangeSchedule } from '../../../../stores/changesSchedule/modal';
+import { useAuthStore } from '../../../../stores/auth';
 
 /* Components */
 import ScheduleModal from '../components/ScheduleModal.vue';
@@ -14,6 +15,9 @@ const registryChangeSchedule = useRegistryChangeSchedule();
 
 /** Хранилище модального окна */
 const modalChangeSchedule = useModalChangeSchedule();
+const auth = useAuthStore();
+
+const user = (item) => auth.teacher.find((el) => el.id === item.teacherId).fullName || '';
 
 onMounted(() => {
   registryChangeSchedule.getSchedules();
@@ -54,7 +58,7 @@ onMounted(() => {
             :key="`rows-${index}`"
           >
             <div
-              v-if="head.name === 'group'"
+              v-if="head.name === 'groups'"
               class="column"
             >
               {{ props.row[head.name]?.name }}
@@ -73,6 +77,9 @@ onMounted(() => {
             </div>
             <div v-else-if="head.name === 'createdAt'">
               {{ props.row[head.name] }}
+            </div>
+            <div v-else-if="head.name === 'teacher'">
+              {{ user(props.row) }}
             </div>
             <div v-else>
               {{ props.row[head.name]?.name }}

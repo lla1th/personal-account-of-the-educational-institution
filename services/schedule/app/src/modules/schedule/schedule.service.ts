@@ -7,6 +7,7 @@ import CabinetModel from '../../model/cabinets/cabinet.model';
 import ScheduleDto from './dto/schedule.dto';
 import * as moment from 'moment';
 import LessonsModel from '../../model/lessons/lessons.model';
+import GroupModel from '../../model/well/well.model';
 
 @Injectable()
 export class ScheduleService {
@@ -14,6 +15,7 @@ export class ScheduleService {
     @InjectModel(ScheduleModel) private scheduleModel: typeof ScheduleModel,
     @InjectModel(CabinetModel) private cabinetModel: typeof CabinetModel,
     @InjectModel(LessonsModel) private lessonsModel: typeof LessonsModel,
+    @InjectModel(GroupModel) private groupModel: typeof GroupModel,
   ) {}
 
   /**
@@ -156,6 +158,7 @@ export class ScheduleService {
    * @param dto
    */
   async createLessons(dto: any): Promise<any> {
+    console.log(dto, '<<<<<<<<<<<< dto');
     await this.lessonsModel.upsert({
       ...(dto.id && { id: dto.id }),
       name: dto.name,
@@ -164,6 +167,19 @@ export class ScheduleService {
 
     return {
       message: 'Создание учебного расписания',
+    };
+  }
+
+  async getGroups(dto: any): Promise<any> {
+    const data = await this.groupModel.findAll();
+
+    return {
+      data: data.map((item) => ({
+        fullName: item.full_name,
+        shortName: item.short_name,
+        id: item.id,
+      })),
+      message: 'Получение курсов',
     };
   }
 }

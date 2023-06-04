@@ -30,16 +30,7 @@ export class AuthService {
         ['access_token', 'refresh_token'].forEach((e) => {
           if (el && el.includes(e)) {
             const info = el.split(';');
-            const findMaxAge = info.find((property) =>
-              property.includes('Max-Age'),
-            );
-            const maxAge = findMaxAge
-              ? { maxAge: findMaxAge.replace('Max-Age=', '') }
-              : {};
             const token = info[0].replace(`${e}=`, '');
-            console.log(maxAge);
-            console.log(e, '<<<<<< e');
-            console.log(res, '<<<<<< res.token');
             res.cookie(e, token, {
               httpOnly: true,
               secure: false,
@@ -67,7 +58,7 @@ export class AuthService {
         },
         message: 'hello',
       };
-    } catch ({ response: { status } }) {
+    } catch ({ status }) {
       switch (status) {
         case 404:
           throw new HttpException({ message: 'bad' }, status);
@@ -77,9 +68,15 @@ export class AuthService {
     }
   }
 
+  async logout(id: string): Promise<any> {
+    await this.fusionauthApi.post('logout', {
+      refreshToken: id,
+      global: true,
+    });
+  }
+
   async statusToken(dto: string): Promise<any> {
     try {
-      console.log(dto, '<<<<<<<<< dto');
       const reqHeaders = { authorization: `Bearer ${dto}` };
       const config = getHttpConfig({ reqHeaders });
       const response = await this.fusionauthApi.get('api/jwt/validate', config);
@@ -90,18 +87,61 @@ export class AuthService {
         },
         message: 'hello',
       };
-    } catch (error) {
-      console.log('error::: ', error);
-
-      const {
-        response: { status },
-      } = error;
+    } catch ({ status }) {
       switch (status) {
         case 401:
           throw new HttpException({ message: 'bad' }, status);
         default:
           throw new HttpException({ message: 'bad 401 :(' }, status);
       }
+    }
+  }
+
+  async getUserInfo(id: string): Promise<any> {
+    try {
+      const data = await this.fusionauthApi.get(`/api/user/${id}`);
+      return {
+        data,
+        message: 'hello',
+      };
+    } catch ({ status }) {
+      switch (status) {
+        case 401:
+          throw new HttpException({ message: 'bad' }, status);
+        default:
+          throw new HttpException({ message: 'bad 401 :(' }, status);
+      }
+    }
+  }
+
+  async getUsers(): Promise<any> {
+    const reqHeaders = {
+      authorization: 'Dpv-trIFMu6qscX9-Uz8z1Xhw2Xic1E9iGOeCziQN4OL-3hrcGS4HIVF',
+    };
+    const config = getHttpConfig({ reqHeaders });
+
+    const { data } = await this.fusionauthApi.get(`/api/user/search`, {
+      ...config,
+      params: {
+        queryString: '*',
+      },
+    });
+
+    const updateData = data.users.map((item) => ({
+      id: item.id,
+      fullName: item.fullName,
+      firstName: item.firstName,
+      lastname: item.lastName,
+      middleName: item.middleName,
+      roles: item.registrations[0]?.roles || [],
+    }));
+    return {
+      data: updateData,
+      message: 'hello',
+    };
+    try {
+    } catch (error) {
+      throw error;
     }
   }
 }

@@ -9,12 +9,13 @@ export class ScheduleService {
   async getSchedule(dto: any): Promise<any> {
     const { data } = await this.databaseApi.get('schedule', { params: dto });
     const {
-      data: { cabinets, lessons },
+      data: { cabinets, lessons, groups },
     } = await this.getInformation(dto);
 
     return {
-      data: data.map(({ cabinetId, lessonId, ...item }) => {
+      data: data.map(({ cabinetId, lessonId, groupId, ...item }) => {
         const searchCabinet = cabinets.find(({ id }) => id === cabinetId);
+        const searchGroup = groups.find(({ id }) => id === groupId);
         const searchLessons = lessons.find(({ id }) => id === lessonId);
 
         return {
@@ -26,6 +27,10 @@ export class ScheduleService {
           lesson: {
             id: searchLessons.id,
             name: searchLessons.name,
+          },
+          groups: {
+            id: searchGroup.id,
+            name: searchGroup.shortName,
           },
         };
       }),
@@ -52,6 +57,10 @@ export class ScheduleService {
     return this.databaseApi.post('schedule/lessons', dto);
   }
 
+  async getGroups(dto: any): Promise<any> {
+    return this.databaseApi.get('schedule/group', dto);
+  }
+
   async getInformation(dto: any): Promise<any> {
     const { data: cabinets } = await this.databaseApi.get('schedule/cabinets', {
       params: dto,
@@ -60,10 +69,13 @@ export class ScheduleService {
       params: dto,
     });
 
+    const { data: groups } = await this.databaseApi.get('schedule/group');
+
     return {
       data: {
         cabinets,
         lessons,
+        groups,
       },
       message: 'Получение общей информации из сервисов',
     };

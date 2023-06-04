@@ -45,4 +45,13 @@ export class ScheduleController {
   async createLessons(@Body() dto: any): Promise<any> {
     return this.scheduleService.createLessons(dto);
   }
+
+  /**
+   * ГРУППЫ
+   */
+
+  @Get('group')
+  async getGroups(@Query() dto: any): Promise<any> {
+    return this.scheduleService.getGroups(dto);
+  }
 }

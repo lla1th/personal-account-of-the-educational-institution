@@ -5,10 +5,16 @@ import ScheduleModel from '../../model/schedule/schedule.model';
 import { SequelizeModule } from '@nestjs/sequelize';
 import CabinetModel from '../../model/cabinets/cabinet.model';
 import LessonsModel from '../../model/lessons/lessons.model';
+import GroupModel from '../../model/well/well.model';
 
 @Module({
   imports: [
-    SequelizeModule.forFeature([ScheduleModel, CabinetModel, LessonsModel]),
+    SequelizeModule.forFeature([
+      ScheduleModel,
+      CabinetModel,
+      LessonsModel,
+      GroupModel,
+    ]),
   ],
   controllers: [ScheduleController],
   providers: [ScheduleService],

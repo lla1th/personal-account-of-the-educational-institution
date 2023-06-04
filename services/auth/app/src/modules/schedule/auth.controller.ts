@@ -14,4 +14,9 @@ export class AuthController {
   async statusToken(@Query('token') dto: string): Promise<any> {
     return this.authService.statusToken(dto);
   }
+
+  @Get('users')
+  async getUsers(): Promise<any> {
+    return this.authService.getUsers();
+  }
 }

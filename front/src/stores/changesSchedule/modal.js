@@ -1,12 +1,12 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { date } from 'quasar';
+import moment from 'moment';
 import Api from '../../utils/Api';
 
 export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
   const form = ref({
     id: '',
-    date: new Date(),
+    date: moment().format('DD.MM.YYYY'),
     well: '',
     group: '',
     selfTraining: false,
@@ -23,6 +23,8 @@ export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
     lessons: [],
   });
 
+  const groups = ref([]);
+
   const viewModalSchedule = ref(false);
 
   /**
@@ -33,7 +35,7 @@ export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
 
     form.value = {
       id: '',
-      date: new Date(),
+      date: moment().format('DD.MM.YYYY'),
       well: '',
       group: '',
       selfTraining: false,
@@ -64,7 +66,7 @@ export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
   const saveSchedule = async () => {
     await Api.post('schedule', {
       ...form.value,
-      date: date.formatDate(form.value.date, 'YYYY-MM-DDTHH:mm:ss.SSSZ'),
+      date: moment(form.value.date, 'DD.MM.YYYY').toDate(),
     });
 
     viewModalSchedule.value = false;
@@ -77,6 +79,12 @@ export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
     // });
   };
 
+  const getGroups = async () => {
+    const { data: { data } } = await Api.get('group');
+
+    groups.value = data;
+  };
+
   return {
     /** Очистка */
     $reset,
@@ -85,8 +93,10 @@ export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
     form,
     viewModalSchedule,
     information,
+    groups,
 
     saveSchedule,
+    getGroups,
     openModal,
   };
 });
