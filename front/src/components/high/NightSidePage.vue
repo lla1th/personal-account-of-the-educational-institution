@@ -36,6 +36,7 @@ defineEmits(['closeSidePage']);
           <NightTitle
             :title="title"
             subtitle
+            not-padding
           />
         </slot>
       </div>

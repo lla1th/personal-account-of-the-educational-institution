@@ -1,10 +1,10 @@
-import { useRegistryLessons } from '../../../stores/lessons/registry';
-import { useModalLessons } from '../../../stores/lessons/modal';
+import { useRegistryGroups } from '../../../stores/groups/registry';
+import { useModalGroups } from '../../../stores/groups/modal';
 
 export const buttonsSidePage = () => {
-  const registryLessons = useRegistryLessons();
+  const registrylGroups = useRegistryGroups();
 
-  const modalLessons = useModalLessons();
+  const modalGroups = useModalGroups();
 
   return [
     {
@@ -14,7 +14,7 @@ export const buttonsSidePage = () => {
         label: 'Создать',
       },
       event: {
-        click: async () => modalLessons.createLessons(),
+        click: async () => modalGroups.createLessons(),
       },
     },
     {
@@ -24,7 +24,7 @@ export const buttonsSidePage = () => {
         label: 'Отмена',
       },
       event: {
-        click: () => registryLessons.openModal(),
+        click: () => registrylGroups.openModal(),
       },
     },
   ];

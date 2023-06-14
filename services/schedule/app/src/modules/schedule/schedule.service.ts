@@ -19,11 +19,10 @@ export class ScheduleService {
   ) {}
 
   /**
-   * Получение расписания
+   * @description Получение расписания
    * @param dto
    */
   async getSchedule(dto: any): Promise<any> {
-    console.log('hello');
     const data: any = await this.cabinetModel.sequelize.query(
       `
       SELECT
@@ -44,7 +43,6 @@ export class ScheduleService {
         type: sequelize.QueryTypes.SELECT,
       },
     );
-    console.log(data, '<<<<<<, data');
 
     return {
       data: data.map((item) => ({
@@ -57,12 +55,74 @@ export class ScheduleService {
   }
 
   /**
-   * Создание расписания
+   * @description Получение списка расписания по дата в разделе "Расписание"
+   * @param dto
+   */
+  async getScheduleDetail(dto: any): Promise<any> {
+    const { dateFrom, dateTo, group } = dto;
+
+    const condition = [];
+
+    console.log(group?.length, '<<<<<<<<< group?.length');
+    console.log(!!group?.length, '<<<<<<<<< !!group?.length');
+    if (group?.length) {
+      condition.push('schedule.group_id IN (:group)');
+    }
+
+    if (dateTo) {
+      condition.push('schedule.date <= :dateTo');
+    }
+
+    if (dateFrom) {
+      condition.push('schedule.date >= :dateFrom');
+    }
+
+    const where =
+      condition.length > 0 ? `WHERE ${condition.join(' AND ')}` : '';
+
+    // todo any
+    const data: any = await this.scheduleModel.sequelize.query(
+      `
+      SELECT
+          id,
+          cabinet_id AS "cabinetId",
+          lesson_id AS "lessonId",
+          teacher_id AS "teacherId",
+          group_id AS "groupId",
+          sub_group AS "subGroup",
+          date,
+          pair,
+          well
+      FROM schedule
+        ${where}
+      ORDER BY date ASC
+    `,
+      {
+        replacements: {
+          dateTo,
+          dateFrom,
+          group,
+        },
+        logging: true,
+        type: sequelize.QueryTypes.SELECT,
+      },
+    );
+
+    return {
+      data: data.map((item) => ({
+        ...item,
+        date: moment(item.date).format('DD.MM.YYYY'),
+      })),
+      message: 'Получение расписания',
+    };
+  }
+
+  /**
+   * @description Создание расписания
    * @param payload
    */
   async createSchedule(payload: ScheduleDto): Promise<any> {
-    console.log(payload, '<<<<<<<<< payload');
-    const data = await this.scheduleModel.create({
+    await this.scheduleModel.create({
       cabinet_id: payload.cabinet,
       teacher_id: payload.teacher,
       group_id: payload.group,
@@ -73,8 +133,6 @@ export class ScheduleService {
       self_training: payload.selfTraining,
       sub_group: payload.subGroup || null,
     });
-
-    console.log(data, 'data ');
 
     return {
       message: 'Создание расписания',
@@ -110,7 +168,7 @@ export class ScheduleService {
   }
 
   /**
-   * Создания кабинета
+   * @description Создания кабинета
    * @param dto
    */
   async createCabinet(dto: any): Promise<any> {
@@ -154,11 +212,10 @@ export class ScheduleService {
   }
 
   /**
-   * Создания кабинета
+   * @description Создания кабинета
    * @param dto
    */
   async createLessons(dto: any): Promise<any> {
-    console.log(dto, '<<<<<<<<<<<< dto');
     await this.lessonsModel.upsert({
       ...(dto.id && { id: dto.id }),
       name: dto.name,
@@ -170,16 +227,52 @@ export class ScheduleService {
     };
   }
 
+  /**
+   * ГРУППЫ
+   */
+
+  /**
+   * @description Получение всех групп
+   * @param dto
+   */
   async getGroups(dto: any): Promise<any> {
-    const data = await this.groupModel.findAll();
+    const data: any = await this.groupModel.sequelize.query(
+      `
+      SELECT
+        id,
+        full_name AS "fullName",
+        short_name AS "shortName",
+        "createdAt"
+      FROM "group"
+    `,
+      {
+        type: sequelize.QueryTypes.SELECT,
+      },
+    );
 
     return {
       data: data.map((item) => ({
-        fullName: item.full_name,
-        shortName: item.short_name,
+        fullName: item.fullName,
+        shortName: item.shortName,
         id: item.id,
       })),
       message: 'Получение курсов',
+    };
+  }
+
+  /**
+   * @description Создание группы
+   * @param dto
+   */
+  async createGroup(dto: any): Promise<any> {
+    await this.groupModel.upsert({
+      ...(dto.id && { id: dto.id }),
+      full_name: dto.fullName,
+      short_name: dto.shortName,
+    });
+
+    return {
+      message: 'Создание группы',
     };
   }
 }

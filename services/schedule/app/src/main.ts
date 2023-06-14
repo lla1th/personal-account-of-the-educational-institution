@@ -1,18 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+// import { NestExpressApplication } from '@nestjs/platform-express';
 
-async function bootstrap() {
+const bootstrap = async () => {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
-
-  // app.useGlobalPipes(
-  //   new ValidationPipe({
-  //     transform: true,
-  //   }),
-  // );
-  // app.setGlobalPrefix('api/v1');
+  app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(8082);
-}
+};
 bootstrap();

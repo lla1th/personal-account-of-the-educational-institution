@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import Api from '../../utils/Api.js';
+import Api from '../../utils/Api';
 
 import { useModalLessons } from './modal';
 

@@ -1,10 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Api } from '../../utils/api';
 import { SCHEDULE_API_TOOL } from '../../const/tokens';
+import {AuthService} from "../auth/auth.service";
 
 @Injectable()
 export class ScheduleService {
-  constructor(@Inject(SCHEDULE_API_TOOL) private databaseApi: Api) {}
+  constructor(
+      private readonly authService: AuthService,
+      @Inject(SCHEDULE_API_TOOL) private databaseApi: Api
+  ) {}
 
   async getSchedule(dto: any): Promise<any> {
     const { data } = await this.databaseApi.get('schedule', { params: dto });
@@ -37,6 +41,79 @@ export class ScheduleService {
     };
   }
 
+  /**
+   * Получение расписания по календарю
+   * @param dto
+   */
+  async getScheduleDetail(dto: any): Promise<any> {
+    const { data } = await this.databaseApi.get('schedule/detail', {
+      params: dto,
+    });
+
+    const {
+      data: { cabinets, lessons, groups },
+    } = await this.getInformation(dto);
+
+    const { data: users } = await this.authService.getUsers();
+
+    const addingData = data.map(({ cabinetId, lessonId, groupId, teacherId, ...item }) => {
+      const searchCabinet = cabinets.find(({ id }) => id === cabinetId);
+      const searchGroup = groups.find(({ id }) => id === groupId);
+      const searchLessons = lessons.find(({ id }) => id === lessonId);
+      const searchUser = users.find(({ id }) => id === teacherId);
+
+      const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+
+      moment
+
+      return {
+        ...item,
+        cabinet: {
+          id: searchCabinet.id,
+          name: searchCabinet.shortName,
+        },
+        lesson: {
+          id: searchLessons.id,
+          name: searchLessons.name,
+        },
+        groups: {
+          id: searchGroup.id,
+          name: searchGroup.shortName,
+        },
+        teacher: {
+          id: searchUser.id,
+          name: searchUser.fullName,
+        },
+      };
+    });
+
+    const formatDataToDate = addingData.reduce((acc, { date, ...current }) => {
+      const newAcc = [...acc];
+
+      const findDate = newAcc.find((item) => item.date === date);
+      if (!findDate) {
+        return [
+          ...newAcc,
+          {
+            date: date,
+            content: [current],
+          },
+        ];
+      }
+
+      return newAcc.map((item) =>
+        item.date !== date
+          ? item
+          : { ...item, content: [...item.content, current] },
+      );
+    }, []);
+
+    return {
+      data: formatDataToDate,
+      message: 'Получения отфильтрованного списка расписания',
+    };
+  }
+
   async createSchedule(payload): Promise<any> {
     return this.databaseApi.post('schedule', payload);
   }
@@ -58,7 +135,11 @@ export class ScheduleService {
   }
 
   async getGroups(dto: any): Promise<any> {
-    return this.databaseApi.get('schedule/group', dto);
+    return this.databaseApi.get('schedule/groups', dto);
+  }
+
+  async createGroups(dto: any): Promise<any> {
+    return this.databaseApi.post('schedule/groups', dto);
   }
 
   async getInformation(dto: any): Promise<any> {
@@ -69,7 +150,7 @@ export class ScheduleService {
       params: dto,
     });
 
-    const { data: groups } = await this.databaseApi.get('schedule/group');
+    const { data: groups } = await this.databaseApi.get('schedule/groups');
 
     return {
       data: {

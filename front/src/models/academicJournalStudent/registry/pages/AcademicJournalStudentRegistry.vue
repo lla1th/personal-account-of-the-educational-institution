@@ -9,7 +9,9 @@ const registryAcademicJournalStudent = useRegistryAcademicJournalStudent();
 
 <template>
   <q-page padding>
-    <NightTitle title="Выберите предмет" />
+    <NightTitle
+      title="Выберите предмет"
+    />
     <div class="q-pa-md row items-start content-start q-gutter-lg">
       <NightCard
         v-for="(item, index) in registryAcademicJournalStudent.menuListStudySubjects"

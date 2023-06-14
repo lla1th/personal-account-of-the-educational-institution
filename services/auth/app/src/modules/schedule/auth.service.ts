@@ -11,14 +11,14 @@ export class AuthService {
     try {
       const reqHeaders = {
         authorization:
-          'Dpv-trIFMu6qscX9-Uz8z1Xhw2Xic1E9iGOeCziQN4OL-3hrcGS4HIVF',
+          'RzTRs_EFqf0zLEdMbrudTbjY8nkjPuyfgiDxYIcevRWq6qexG89FwAmI',
       };
       const config = getHttpConfig({ reqHeaders });
 
       const payload = {
         loginId: dto.username.trim(),
         password: dto.password.trim(),
-        applicationId: 'e6f57b37-c617-4953-b243-ca0aa129a0f2',
+        applicationId: 'f02adce3-dd1e-4d8b-a1c3-5437a803d14c',
       };
 
       const response = await this.fusionauthApi.post(
@@ -45,7 +45,7 @@ export class AuthService {
       const { id: userId, registrations, data: dataUser } = user;
       const { roles } = registrations.find(
         ({ applicationId }) =>
-          applicationId === 'e6f57b37-c617-4953-b243-ca0aa129a0f2',
+          applicationId === 'f02adce3-dd1e-4d8b-a1c3-5437a803d14c',
       );
       const { userType = 'admin' } = dataUser || {};
       return {
@@ -56,7 +56,7 @@ export class AuthService {
           roles,
           userType,
         },
-        message: 'hello',
+        message: 'hel23lo',
       };
     } catch ({ status }) {
       switch (status) {
@@ -116,7 +116,7 @@ export class AuthService {
 
   async getUsers(): Promise<any> {
     const reqHeaders = {
-      authorization: 'Dpv-trIFMu6qscX9-Uz8z1Xhw2Xic1E9iGOeCziQN4OL-3hrcGS4HIVF',
+      authorization: 'RzTRs_EFqf0zLEdMbrudTbjY8nkjPuyfgiDxYIcevRWq6qexG89FwAmI',
     };
     const config = getHttpConfig({ reqHeaders });
 

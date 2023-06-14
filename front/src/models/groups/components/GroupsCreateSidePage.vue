@@ -2,14 +2,14 @@
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { buttonsSidePage } from '../configs/buttons';
-import { useModalLessons } from '../../../stores/lessons/modal';
+import { useModalGroups } from '../../../stores/groups/modal';
 
 // store
-const modalLessons = useModalLessons();
+const modalGroups = useModalGroups();
 
-const { form, viewModal } = storeToRefs(modalLessons);
+const { form, viewModal } = storeToRefs(modalGroups);
 
-const title = computed(() => 'Добавить кабинет');
+const title = computed(() => 'Добавить группу');
 </script>
 
 <template>
@@ -21,15 +21,15 @@ const title = computed(() => 'Добавить кабинет');
       <q-input
         outlined
         class="q-mb-md"
-        label="Название Предмета"
+        label="Название специальности"
         :model-value="form.name"
-        @update:model-value="modalLessons.changeSidePage({ content: $event, key: 'name' })"
+        @update:model-value="modalGroups.changeSidePage({ content: $event, key: 'name' })"
       />
       <q-input
         outlined
-        label="Код предмета"
+        label="Номер группы"
         :model-value="form.code"
-        @update:model-value="modalLessons.changeSidePage({ content: $event, key: 'code' })"
+        @update:model-value="modalGroups.changeSidePage({ content: $event, key: 'code' })"
       />
     </template>
     <template #footer>

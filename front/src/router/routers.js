@@ -12,6 +12,7 @@ import LessonsPage from '../models/lessons/pages/LessonsPage.vue';
 import AcademicJournalDetail from '../models/academicJournalTeacher/detail/pages/AcademicJournalDetail.vue';
 import AcademicJournalRegistry from '../models/academicJournalTeacher/registry/pages/AcademicJournalRegistry.vue';
 import AcademicJournalStudentRegistry from '../models/academicJournalStudent/registry/pages/AcademicJournalStudentRegistry.vue';
+import GroupsPage from '../models/groups/pages/GroupsPage.vue';
 
 const routes = [
   { path: '/', name: 'Home', component: HomePage },
@@ -50,6 +51,9 @@ const routes = [
   },
   {
     path: '/lessons', name: 'Lessons', component: LessonsPage,
+  },
+  {
+    path: '/groups', name: 'Groups', component: GroupsPage,
   },
 ];
 

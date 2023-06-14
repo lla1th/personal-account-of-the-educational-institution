@@ -13,6 +13,11 @@ export class ScheduleController {
     return this.scheduleService.getSchedule(dto);
   }
 
+  @Get('detail')
+  async getScheduleDetail(@Query() dto: any): Promise<any> {
+    return this.scheduleService.getScheduleDetail(dto);
+  }
+
   @Post()
   async createSchedule(@Body() payload: any): Promise<any> {
     return this.scheduleService.createSchedule(payload);
@@ -50,8 +55,13 @@ export class ScheduleController {
    * ГРУППЫ
    */
 
-  @Get('group')
+  @Get('groups')
   async getGroups(@Query() dto: any): Promise<any> {
     return this.scheduleService.getGroups(dto);
+  }
+
+  @Post('groups')
+  async createGroup(@Query() dto: any): Promise<any> {
+    return this.scheduleService.createGroup(dto);
   }
 }

@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import Api from '../../utils/Api.js';
+import Api from '../../utils/Api';
 
 import { useRegistryLessons } from './registry';
 
@@ -13,6 +13,8 @@ export const useModalLessons = defineStore('modalCreateLessons', () => {
     code: '',
   });
 
+  const viewModal = ref(false);
+
   const $reset = () => {
     form.value = {
       id: null,
@@ -22,8 +24,6 @@ export const useModalLessons = defineStore('modalCreateLessons', () => {
 
     viewModal.value = false;
   };
-
-  const viewModal = ref(false);
 
   const openModal = () => viewModal.value = !viewModal.value;
 

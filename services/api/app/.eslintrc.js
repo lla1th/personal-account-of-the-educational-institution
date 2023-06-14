@@ -2,24 +2,63 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: 'tsconfig.json',
-    tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint/eslint-plugin'],
+  plugins: [
+    'import',
+    '@typescript-eslint/eslint-plugin',
+  ],
   extends: [
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
+    'typescript',
+    'airbnb-base',
+    'plugin:sonarjs/recommended',
+    'plugin:@typescript-eslint/recommended'
   ],
   root: true,
   env: {
     node: true,
-    jest: true,
   },
   ignorePatterns: ['.eslintrc.js'],
   rules: {
-    '@typescript-eslint/interface-name-prefix': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    "max-classes-per-file": "off",
+    "import/prefer-default-export": "off",
+    "no-useless-constructor": "off",
+    "dot-notation": "off",
+    "camelcase": "off",
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "indent": ["error", 2, {
+      "SwitchCase": 1,
+    }],
+    "semi" : "off" ,
+    "@typescript-eslint/semi" : [ "error" ],
+    "import/no-extraneous-dependencies": "warn",
+    "class-methods-use-this": "warn",
+    "object-curly-newline": "warn",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "error",
+    "@typescript-eslint/no-unused-vars": ["error", { "ignoreRestSiblings": true }],
+
+    'sonarjs/no-duplicate-string': 'off',
+    'sonarjs/cognitive-complexity': 'warn',
   },
+  settings: {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    }
+  }
 };

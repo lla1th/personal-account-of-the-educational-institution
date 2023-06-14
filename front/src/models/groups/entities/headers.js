@@ -1,14 +1,14 @@
 export default () => ([
   {
-    name: 'name',
+    name: 'fullName',
     required: true,
-    label: 'Название предмета',
+    label: 'Название специальности',
     align: 'left',
   },
   {
-    name: 'code',
+    name: 'shortName',
     required: true,
-    label: 'Код предмета',
+    label: 'Номер группы',
     align: 'left',
   },
   {

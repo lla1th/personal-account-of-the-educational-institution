@@ -1,24 +1,34 @@
 <script setup>
 import { storeToRefs } from 'pinia';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useAuthStore } from '../../../stores/auth';
 
 const auth = useAuthStore();
 
-const { authForm } = storeToRefs(auth);
+const { authForm, loadingAuth } = storeToRefs(auth);
+
+const password = ref(true);
 
 onMounted(() => {
   auth.checkToken();
 });
 
+const visibilityPassword = () => {
+  password.value = !password.value;
+};
+
 const updateForm = (key, content) => {
   auth.$patch({
     authForm: {
       ...auth.authForm,
-      [key]: content,
+      [key]: {
+        value: content,
+        valid: true,
+      },
     },
   });
 };
+
 </script>
 
 <template>
@@ -27,26 +37,40 @@ const updateForm = (key, content) => {
   >
     <div class="auth-content row justify-center content-center">
       <div class="auth-form">
-        <NightTitle title="Вход" />
+        <NightTitle
+          title="Вход"
+          content-bottom="Личный кабинет для вас"
+          color-title
+        />
         <q-input
-          filled
+          outlined
           label="Логин"
-          :model-value="authForm.login"
+          :model-value="authForm.login.value"
+          :error="!authForm.login.valid"
           @update:model-value="updateForm('login', $event)"
-          class="q-mb-md"
         />
         <q-input
-          filled
+          outlined
           label="Пароль"
-          :type="'password'"
-          :model-value="authForm.password"
-          class="q-mb-lg"
+          :type="password ? 'password' : 'text'"
+          class="q-mb-xs"
+          :model-value="authForm.password.value"
+          :error="!authForm.password.valid"
           @update:model-value="updateForm('password', $event)"
-        />
-        <q-btn
+        >
+          <template #append>
+            <q-icon
+              :name="password ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="visibilityPassword()"
+            />
+          </template>
+        </q-input>
+
+        <NightButton
           label="Войти"
+          :loading="loadingAuth"
           class="auth-form__btn"
-          push
           @click="auth.sendAuth()"
         />
       </div>
@@ -56,29 +80,20 @@ const updateForm = (key, content) => {
 
 <style lang="sass" scoped>
 .auth
-  background: $primary
+  background: url('../../../assets/image/auth.jpg')
   overflow: hidden
   &-content
     background: white
-    width: 40%
+    box-shadow: 0 10px 80px rgba(0,0,0,.25)
+    width: 45%
+    padding: 0 40px
     position: relative
     z-index: 3
-    &::after
-      content: ''
-      background: white
-      width: 50%
-      z-index: -1
-      height: 120vh
-      display: block
-      position: absolute
-      transform: rotate(12.5deg) translateX(-8rem)
-      left: 0
-      box-shadow: -45px 50px 40px rgba(0,0,0,.15)
   &-form
     max-width: 400px
     flex: 1
     &__btn
-      min-width: 155px
+      min-width: 135px
       padding: 16px
 
 </style>

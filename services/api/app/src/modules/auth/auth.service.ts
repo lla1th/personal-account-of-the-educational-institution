@@ -7,11 +7,11 @@ export class AuthService {
   constructor(@Inject(AUTH_API_TOOL) private authApi: Api) {}
 
   async login(dto: any, res): Promise<any> {
+    console.log('hello')
     const {
       data: { accessToken },
     } = await this.authApi.post('auth/login', dto);
 
-    console.log(accessToken, '<<<<<<<<<');
     res.cookie('access_token', accessToken, {
       httpOnly: true,
       domain: 'localhost',

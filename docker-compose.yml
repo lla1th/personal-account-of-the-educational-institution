@@ -3,11 +3,74 @@ version: '3.4'
 x-base:
   &base
   networks:
-    - net
+    - laith_net
   restart: always
 
 
 services:
+  postgres:
+    <<: *base
+    build: ./containers/postgres
+    ports:
+      - "127.0.0.1:5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - ./postgres/db_backups:/backups
+      - ./postgres/pg:/var/lib/postgresql/data
+
+  node_api:
+    <<: *base
+    build: ./containers/node-api
+    ports:
+      - "127.0.0.1:8081:8081"
+    volumes:
+      - ./services/api/app:/app
+      - ./services/api/app/dist:/app/dist
+      - ./services/api/app/node_modules:/node_modules
+    env_file:
+      - .env
+
+
+  node_schedule:
+    <<: *base
+    build: ./containers/node-schedule
+    ports:
+      - '127.0.0.1:8082:8082'
+    volumes:
+      - ./services/schedule/app:/app
+      - ./services/schedule/app/dist:/app/dist
+      - ./services/schedule/app/node_modules:/node_modules
+    env_file:
+      - .env
+
+
+  node_fusionauth:
+    <<: *base
+    build: ./containers/node-fusionauth
+    ports:
+      - '127.0.0.1:8083:8083'
+    volumes:
+      - ./services/auth/app:/app
+      - ./services/auth/app/dist:/app/dist
+      - ./services/auth/app/node_modules:/node_modules
+    env_file:
+      - .env
+
+
+  nginx:
+    <<: *base
+    build: ./containers/nginx
+    ports:
+      - "127.0.0.1:80:80"
+    volumes:
+      - /etc/localtime:/etc/localtime/:ro
+      - ./services/api/app:/app
+    command: nginx -g "daemon off;"
+    depends_on:
+      - node_api
+      - node_schedule
+
   fusionauth:
     <<: *base
     build: ./containers/fusionauth
@@ -22,73 +85,6 @@ services:
     depends_on:
       - postgres
 
-  node_api:
-    <<: *base
-    build: ./containers/node-api
-    ports:
-      - "127.0.0.1:8081:8081"
-    volumes:
-      - ./services/api/app:/app
-      - ./services/api/app/dist:/app/dist
-      - ./services/api/app/node_modules:/node_modules
-    env_file:
-      - .env
-    mem_reservation: 128m
-    mem_limit: 1g
-
-  node_schedule:
-    <<: *base
-    build: ./containers/node-schedule
-    ports:
-      - '127.0.0.1:8082:8082'
-    volumes:
-      - ./services/schedule/app:/app
-      - ./services/schedule/app/dist:/app/dist
-      - ./services/schedule/app/node_modules:/node_modules
-    env_file:
-      - .env
-    mem_reservation: 128m
-
-  node_fusionauth:
-    <<: *base
-    build: ./containers/node-fusionauth
-    ports:
-      - '127.0.0.1:8083:8083'
-    volumes:
-      - ./services/auth/app:/app
-      - ./services/auth/app/dist:/app/dist
-      - ./services/auth/app/node_modules:/node_modules
-    env_file:
-      - .env
-    mem_reservation: 128m
-
-  postgres:
-    <<: *base
-    build: ./containers/postgres
-    ports:
-      - "127.0.0.1:5432:5432"
-    env_file:
-      - .env
-    volumes:
-      - ./postgres/db_backups:/backups
-      - ./postgres/pg:/var/lib/postgresql/data
-    mem_reservation: 128m
-
-  nginx:
-    <<: *base
-    build: ./containers/nginx
-    ports:
-      - "127.0.0.1:80:80"
-    volumes:
-      - /etc/localtime:/etc/localtime/:ro
-      - ./api-gateway/app:/app
-    command: nginx -g "daemon off;"
-    depends_on:
-      - node_api
-      - node_schedule
-    mem_reservation: 20m
-    mem_limit: 512m
-
 networks:
-  net:
+  laith_net:
     driver: bridge

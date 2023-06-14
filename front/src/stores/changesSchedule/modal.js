@@ -2,8 +2,11 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import moment from 'moment';
 import Api from '../../utils/Api';
+import { useRegistryChangeSchedule } from './registry';
 
 export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
+  const registryChangeSchedule = useRegistryChangeSchedule();
+
   const form = ref({
     id: '',
     date: moment().format('DD.MM.YYYY'),
@@ -69,6 +72,7 @@ export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
       date: moment(form.value.date, 'DD.MM.YYYY').toDate(),
     });
 
+    await registryChangeSchedule.getSchedules();
     viewModalSchedule.value = false;
     $reset();
 
@@ -79,8 +83,12 @@ export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
     // });
   };
 
+  const closeSchedule = () => {
+    viewModalSchedule.value = false;
+  };
+
   const getGroups = async () => {
-    const { data: { data } } = await Api.get('group');
+    const { data: { data } } = await Api.get('groups');
 
     groups.value = data;
   };
@@ -96,6 +104,7 @@ export const useModalChangeSchedule = defineStore('modalChangeSchedule', () => {
     groups,
 
     saveSchedule,
+    closeSchedule,
     getGroups,
     openModal,
   };

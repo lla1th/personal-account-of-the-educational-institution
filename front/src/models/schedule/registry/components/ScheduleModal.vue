@@ -3,11 +3,12 @@
 import { storeToRefs } from 'pinia';
 import { useModalChangeSchedule } from '../../../../stores/changesSchedule/modal';
 
+/** config */
+import { scheduleModalButtons } from '../config/buttons';
+
 /** entities */
 import { subGroups } from '../../../../entities/index';
-import {
-  well, pair,
-} from '../../../../entities/mock';
+import { well, pair } from '../../../../entities/mock';
 import { useAuthStore } from '../../../../stores/auth';
 
 const modalChangeSchedule = useModalChangeSchedule();
@@ -22,9 +23,7 @@ const {
 } = storeToRefs(modalChangeSchedule);
 
 /* actions */
-const {
-  saveSchedule,
-} = modalChangeSchedule;
+const { closeSchedule } = modalChangeSchedule;
 
 // todo убить
 modalChangeSchedule.getGroups();
@@ -51,11 +50,6 @@ const updateForm = (key, content) => {
     },
   });
 };
-
-const closeModal = () => {
-  modalChangeSchedule.$patch({ viewModalSchedule: false });
-};
-
 </script>
 
 <template>
@@ -71,7 +65,7 @@ const closeModal = () => {
     no-swipe-close
     no-swipe-backdrop
     behavior="mobile"
-    @update:model-value="closeModal"
+    @update:model-value="closeSchedule"
   >
     <div class="night-side-page__container q-pa-xl column no-wrap justify-between">
       <div class="night-side-page__title q-pb-lg">
@@ -246,19 +240,14 @@ const closeModal = () => {
       <div class="night-side-page__footer q-mt-lg">
         <slot name="footer">
           <div class="row q-gutter-md">
-            <q-btn
-              unelevated
-              size="md"
-              color="primary"
-              label="Создать"
-              @click="saveSchedule()"
-            />
-            <q-btn
-              outline
-              size="md"
-              color="primary"
-              label="Отменить"
-              @click="closeModal"
+            <NightButton
+              v-for="(button, index) in scheduleModalButtons()"
+              :key="`button-modal-${button.label}-${index}`"
+              :label="button.label"
+              :size="button.size"
+              :outline="button.outline"
+              :loading="button.loading"
+              @click="button.click()"
             />
           </div>
         </slot>

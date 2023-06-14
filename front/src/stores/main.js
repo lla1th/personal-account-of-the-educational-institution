@@ -1,6 +1,8 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
+import 'moment/locale/ru';
+
 import menuNavigation from '../entities/menuNavigation';
 
 import router from '../router/routers';

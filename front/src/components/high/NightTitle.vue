@@ -17,15 +17,25 @@ defineProps({
     type: String,
     default: () => '',
   },
-  getIconLeft: {
-    type: String,
-    default: () => '',
-  },
-  buttonOutline: {
+  disable: {
     type: Boolean,
     default: false,
   },
-  disable: {
+  colorTitle: {
+    type: Boolean,
+    default: false,
+  },
+  contentTop: {
+    type: String,
+    default: '',
+    required: false,
+  },
+  contentBottom: {
+    type: String,
+    default: '',
+    required: false,
+  },
+  notPadding: {
     type: Boolean,
     default: false,
   },
@@ -37,15 +47,31 @@ defineEmits(['ButtonClick']);
 <template>
   <section
     class="night-title flex justify-between"
+    :class="{ 'q-mb-lg': !notPadding }"
   >
     <div class="flex-grow-1">
       <div class="col-grow night-page-title__title">
+        <div
+          v-if="contentTop"
+          class="row text-subtitle1"
+        >
+          {{ contentTop }}
+        </div>
         <component
           :is="!subtitle ? 'h4' : 'h5'"
-          :class="[{ 'medium': !subtitle }]"
+          :class="[
+            { 'text-weight-medium': !subtitle },
+            {'text-primary': colorTitle },
+          ]"
         >
           {{ title }}
         </component>
+        <div
+          v-if="contentBottom"
+          class="row text-subtitle1 q-mt-xs q-mb-md text-primary"
+        >
+          {{ contentBottom }}
+        </div>
       </div>
     </div>
     <div
@@ -53,21 +79,13 @@ defineEmits(['ButtonClick']);
       class="flex justify-end"
     >
       <slot name="action">
-        <q-btn
-          :disable="disable"
-          :outline="buttonOutline"
+        <NightButton
+          :label="buttonLabel"
+          :disabled="disable"
+          icon-left="add"
+          outline
           @click="$emit('ButtonClick')"
-          push
-        >
-          <q-icon
-            v-if="getIconLeft.length"
-            left
-            :name="getIconLeft"
-          />
-          <div class="row">
-            {{ buttonLabel }}
-          </div>
-        </q-btn>
+        />
       </slot>
     </div>
   </section>
@@ -79,10 +97,11 @@ defineEmits(['ButtonClick']);
     flex-basis: $count
     word-break: break-word
     min-height: 52px
+    color: rgba(0,0,0, 0.87)
 
 .night-title
   margin:
-    top: 30px
+    top: 20px
   @include titleFlexBasic(100%)
   &_action
     @include titleFlexBasic(calc(100% - 200px))

@@ -2,15 +2,15 @@
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import headers from '../entities/headers';
-import CabinetCreateSidePage from '../components/LessonsCreateSidePage.vue';
-import { useRegistryLessons } from '../../../stores/lessons/registry';
+import { useRegistryGroups } from '../../../stores/groups/registry';
+import GroupsCreateSidePage from '../components/GroupsCreateSidePage.vue';
 
-const registryLessons = useRegistryLessons();
+const registryGroups = useRegistryGroups();
 
-const { lessons } = storeToRefs(registryLessons);
+const { groups } = storeToRefs(registryGroups);
 
 onMounted(async () => {
-  await registryLessons.getList();
+  await registryGroups.getGroups();
 });
 
 </script>
@@ -18,15 +18,15 @@ onMounted(async () => {
 <template>
   <q-page padding>
     <NightTitle
-      title="Предметы"
+      title="Группы"
       has-button
-      button-label="Добавить новый предмет"
+      button-label="Добавить новую группу"
       class="q-mb-lg"
-      @ButtonClick="registryLessons.openModal()"
+      @ButtonClick="registryGroups.openModal()"
     />
     <q-table
       :columns="headers()"
-      :rows="lessons"
+      :rows="groups"
       row-key="label"
       separator="cell"
     >
@@ -37,12 +37,12 @@ onMounted(async () => {
             :key="`rows-${index}`"
           >
             <div
-              v-if="head.name === 'name'"
+              v-if="head.name === 'fullName'"
             >
               {{ props.row[head.name] }}
             </div>
             <div
-              v-if="head.name === 'code'"
+              v-if="head.name === 'shortName'"
             >
               {{ props.row[head.name] }}
             </div>
@@ -61,6 +61,6 @@ onMounted(async () => {
       </template>
     </q-table>
 
-    <CabinetCreateSidePage />
+    <GroupsCreateSidePage />
   </q-page>
 </template>

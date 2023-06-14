@@ -11,8 +11,12 @@ const store = useHomeStore();
 
 <template>
   <q-page padding>
-    <NightTitle title="Главная" />
-    <div class="q-pa-md row items-start content-start q-gutter-lg">
+    <NightTitle
+      title="Продуктивного рабочего дня!"
+      content-top="Добрый день Марат."
+      padding
+    />
+    <div class="q-mt-lg row items-start content-start q-gutter-lg">
       <NightCard
         v-for="(item, index) in store.cards"
         :key="`menu-card-${index}`"
@@ -20,7 +24,7 @@ const store = useHomeStore();
         @click="mainStore.routerPage(item.url)"
       >
         <template #sub-title>
-          <div class="text-subtitle2">
+          <div class="text-body2 text-dark">
             {{ item.subTitle }}
           </div>
         </template>

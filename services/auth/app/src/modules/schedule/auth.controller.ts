@@ -7,6 +7,7 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() dto: any, @Res({ passthrough: true }) res): Promise<any> {
+    console.log('hello453');
     return this.authService.login(dto, res);
   }
 

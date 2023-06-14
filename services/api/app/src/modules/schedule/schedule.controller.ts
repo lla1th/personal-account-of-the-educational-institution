@@ -6,8 +6,13 @@ export class ScheduleController {
   constructor(private readonly scheduleService: ScheduleService) {}
 
   @Get('schedule')
-  getSchedule(@Body() dto: any): Promise<any> {
+  getSchedule(@Query() dto: any): Promise<any> {
     return this.scheduleService.getSchedule(dto);
+  }
+
+  @Get('schedule/detail')
+  getScheduleDetail(@Query() dto: any): Promise<any> {
+    return this.scheduleService.getScheduleDetail(dto);
   }
 
   @Post('schedule')
@@ -40,8 +45,13 @@ export class ScheduleController {
     return this.scheduleService.getInformation(dto);
   }
 
-  @Get('group')
+  @Get('groups')
   getGroups(@Query() dto: any): Promise<any> {
     return this.scheduleService.getGroups(dto);
+  }
+
+  @Post('groups')
+  createGroups(@Body() dto: any): Promise<any> {
+    return this.scheduleService.createGroups(dto);
   }
 }

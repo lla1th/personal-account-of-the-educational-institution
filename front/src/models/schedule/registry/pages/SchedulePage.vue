@@ -17,7 +17,7 @@ const registryChangeSchedule = useRegistryChangeSchedule();
 const modalChangeSchedule = useModalChangeSchedule();
 const auth = useAuthStore();
 
-const user = (item) => auth.teacher.find((el) => el.id === item.teacherId).fullName || '';
+const user = (item) => auth.teacher.find((el) => el.id === item.teacherId)?.fullName || '';
 
 onMounted(() => {
   registryChangeSchedule.getSchedules();
@@ -35,6 +35,9 @@ onMounted(() => {
     <q-table
       :columns="headers()"
       :rows="registryChangeSchedule.elements"
+      :pagination="{
+        rowsPerPage: 10,
+      }"
       row-key="label"
       separator="cell"
       class="q-mt-lg"
