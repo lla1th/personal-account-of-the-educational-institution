@@ -2,11 +2,14 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 // eslint-disable-next-line import/extensions
 import Api from '../../utils/Api.js';
+import {useRegistryStudents} from "@/stores/students/registry.js";
 
 export const useModalStudents = defineStore('modalStudents', () => {
   const viewModalCreateGrade = ref(false);
+    const registryStudents = useRegistryStudents();
 
-  const form = ref({
+
+    const form = ref({
     id: null,
     name: null,
     age: null,
@@ -26,10 +29,14 @@ export const useModalStudents = defineStore('modalStudents', () => {
 
   const createAssessment = async () => {
     if (!form.value.id) {
-      await Api.post('students', form.value);
+        const { id, ...data } = form.value;
+      await Api.post('student/create', { major: '32132', name: data.name, age: data.age, grade: data.grade, student: { ...data, major: '32132'} });
+        await registryStudents.getList();
+        $reset();
       return;
     }
-    await Api.put(`students/${form.value.id}`, form.value);
+    await Api.put(`student/${form.value.id}`, { ...form.value, major: 'test' });
+    await registryStudents.getList();
     $reset();
   };
 

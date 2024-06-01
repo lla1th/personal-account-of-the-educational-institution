@@ -12,7 +12,7 @@ export const useRegistryStudents = defineStore('registryStudents', () => {
   };
 
   const deleteStudent = async (item) => {
-    await Api.delete(`student/${item.id}`);
+    await Api.delete(`student/delete/${item}`);
     await getList()
   };
 
