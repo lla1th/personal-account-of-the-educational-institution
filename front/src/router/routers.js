@@ -13,6 +13,7 @@ import AcademicJournalDetail from '../models/academicJournalTeacher/detail/pages
 import AcademicJournalRegistry from '../models/academicJournalTeacher/registry/pages/AcademicJournalRegistry.vue';
 import AcademicJournalStudentRegistry from '../models/academicJournalStudent/registry/pages/AcademicJournalStudentRegistry.vue';
 import GroupsPage from '../models/groups/pages/GroupsPage.vue';
+import StudentPage from '../models/students/registry/pages/StudentPage.vue';
 
 const routes = [
   { path: '/', name: 'Home', component: HomePage },
@@ -54,6 +55,9 @@ const routes = [
   },
   {
     path: '/groups', name: 'Groups', component: GroupsPage,
+  },
+  {
+    path: '/students', name: 'Students', component: StudentPage,
   },
 ];
 

@@ -27,4 +27,4 @@ class Api {
   }
 }
 
-export default (new Api('http://localhost:8081/api/v1'));
+export default (new Api('http://localhost:5022/api/v1'));
