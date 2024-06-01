@@ -11,8 +11,8 @@ export const useRegistryStudents = defineStore('registryStudents', () => {
     students.value = data.data;
   };
 
-  const deleteStudent = async () => {
-    await Api.delete('student');
+  const deleteStudent = async (item) => {
+    await Api.delete(`student/${item.id}`);
     await getList()
   };
 

@@ -61,7 +61,7 @@ onMounted(async () => {
               />
               <NightButton
                   label="Удалить"
-                @click="registryStudents.deleteStudent()"
+                @click="registryStudents.deleteStudent(props.row.id)"
               />
             </div>
           </q-td>

@@ -29,7 +29,7 @@ export const useModalStudents = defineStore('modalStudents', () => {
       await Api.post('students', form.value);
       return;
     }
-    await Api.put('students', form.value);
+    await Api.put(`students/${form.value.id}`, form.value);
     $reset();
   };
 
