@@ -6,13 +6,14 @@ import headers from '../entities/headers';
 import StudentModal from '../components/modal/StudentModal.vue';
 // eslint-disable-next-line import/extensions
 import { useModalStudents } from '@/stores/students/modal.js';
+import NightButton from "@/components/ui/NightButton.vue";
 
 const registryStudents = useRegistryStudents();
 
 const modalAcademicJournal = useModalStudents();
 
-onMounted(() => {
-  registryStudents.getList();
+onMounted(async () => {
+  await registryStudents.getList();
 });
 </script>
 
@@ -51,6 +52,17 @@ onMounted(() => {
           >
             <div>
               {{ props.row[head.name] }}
+            </div>
+            <div v-if="head.name === 'actions'">
+              <NightButton
+                  label="Изменить"
+                  class="q-mr-lg"
+                  @click="modalAcademicJournal.openUpdateModal(props.row)"
+              />
+              <NightButton
+                  label="Удалить"
+                @click="registryStudents.deleteStudent()"
+              />
             </div>
           </q-td>
         </q-tr>

@@ -7,12 +7,8 @@ class Api {
     const baseURL = SERVER_API;
 
     this.instance = axios.create({
-      withCredentials: true,
       baseURL,
-      mode: 'cors',
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-      },
+        headers: {'X-Custom-Header': 'foobar'}
     });
 
     this.post = async (url, data = {}, config = {}) => this.instance.post(url, data, config);
@@ -27,4 +23,4 @@ class Api {
   }
 }
 
-export default (new Api('http://localhost:5022/api/v1'));
+export default (new Api('http://localhost:5022/'));

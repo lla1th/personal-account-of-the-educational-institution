@@ -33,6 +33,17 @@ export const useModalStudents = defineStore('modalStudents', () => {
     $reset();
   };
 
+  const openUpdateModal = async (payload) => {
+    form.value = {
+        id: payload.id,
+        name: payload.name,
+        age: payload.age,
+        grade: payload.grade,
+    };
+
+    viewModalCreateGrade.value = true;
+  };
+
   const cancelModal = () => {
     $reset();
   };
@@ -47,5 +58,6 @@ export const useModalStudents = defineStore('modalStudents', () => {
 
     cancelModal,
     createAssessment,
+  openUpdateModal,
   };
 });
